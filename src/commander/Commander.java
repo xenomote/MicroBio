@@ -9,8 +9,7 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 import space.Space;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static processing.core.PVector.dist;
 
@@ -19,7 +18,7 @@ public abstract class Commander {
     private Space<EnergySource> source_map;
     private List<Squadron> squadrons;
     private List<Colony> colonies;
-    private List<Cell> spawned;
+    private Map<Group, Cell> spawned;
     private int colour;
 
     public Commander(Space<Cell> cell_map, Space<EnergySource> source_map, int colour) {
@@ -29,7 +28,7 @@ public abstract class Commander {
         this.colonies = new ArrayList<>();
         this.squadrons = new ArrayList<>();
 
-        this.spawned = new ArrayList<>();
+        this.spawned = new HashMap<>();
 
         this.colour = colour;
     }
@@ -79,6 +78,7 @@ public abstract class Commander {
     }
 
     public void update() {
+        spawned.forEach(Group::attach);
         spawned.clear();
 
         colonies.removeIf(colony -> {
@@ -125,11 +125,11 @@ public abstract class Commander {
         return source_map;
     }
 
-    public void spawn(Cell cell) {
-        spawned.add(cell);
+    public void spawn(Group group, Cell cell) {
+        spawned.put(group, cell);
     }
 
-    public List<Cell> getSpawned() {
-        return spawned;
+    public Collection<Cell> getSpawned() {
+        return spawned.values();
     }
 }
