@@ -39,8 +39,6 @@ public class Game extends PApplet {
     SoundFile[] splat;
     SoundFile music;
 
-    private int last_millis;
-
     private Mouse mouse;
     private Keyboard keyboard;
     private Camera camera;
@@ -93,7 +91,7 @@ public class Game extends PApplet {
     @Override
     public void setup() {
         noCursor();
-        // frameRate(1000);
+        frameRate(60);
 
         rectMode(RADIUS);
 
@@ -190,18 +188,8 @@ public class Game extends PApplet {
 
     @Override
     public void draw() {
-        int millis = millis();
-        int elapsed = millis - last_millis;
 
-        if (elapsed == 0) return;
-
-        last_millis = millis;
-
-        if (!ui.paused()) {
-            for (int i = 0; i < elapsed; i++) {
-                update_step();
-            }
-        }
+        if (!ui.paused()) update_step();
 
         mouse.update();
         keyboard.update();

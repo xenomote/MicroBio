@@ -25,10 +25,8 @@ public class Old extends PApplet {
 
     final float INFINITY = Float.POSITIVE_INFINITY;
     final float MAP_RADIUS = 2500;
-    final float MIN_TIME_DELTA = 60/25f;
 
-    final int
-            ATTACK_FRAMES = 10,
+    final int ATTACK_FRAMES = 10,
 
     STARTING_CELLS = 10,
             OPPOSITION_AIS = 50,
@@ -36,8 +34,6 @@ public class Old extends PApplet {
 
     SoundFile[] splat;
     SoundFile music;
-
-    float timeDelta;
 
     Mouse mouse;
     Camera camera;
@@ -95,20 +91,16 @@ public class Old extends PApplet {
     }
 
     public void draw() {
-        timeDelta = 60/frameRate;
-
-        background(DARK_GREY);
 
         if (!pause) {
-            for (double elapsed = 0; elapsed < timeDelta; elapsed += MIN_TIME_DELTA) {
-                mouse.update();
-                camera.update();
-                updateControllers();
-                updateCells();
-                updateSources();
-            }
+            mouse.update();
+            camera.update();
+            updateControllers();
+            updateCells();
+            updateSources();
         }
 
+        background(DARK_GREY);
         drawCameraView();
         mouse.selector().drawCursor();
         printStatistics();
@@ -259,7 +251,7 @@ public class Old extends PApplet {
 
     void updateSources() {
         for (EnergySource source : sources)
-            source.update(timeDelta);
+            source.update();
     }
 
     void drawEnergyLevels() {
@@ -396,7 +388,7 @@ public class Old extends PApplet {
             scale += mouse.scroll * 0.1;
             scale = constrain(scale, 0.1f, 1);
 
-            float pan = 10/scale * timeDelta;
+            float pan = 10/scale;
 
             if (key_shift) {
                 position.add(PVector.sub(mouse.position, screenCenter).div(10));
@@ -528,7 +520,7 @@ public class Old extends PApplet {
 
             this.health = MAX_HEALTH;
             this.energy = MAX_ENERGY;
-            this.speed = 5;
+            this.speed = 10;
 
             this.attackCooldown = (int) random(ATTACK_SPEED);
             this.divisionCooldown = (int) random(DIVISION_SPEED);
@@ -611,10 +603,10 @@ public class Old extends PApplet {
         void integrate() {
             SPACE.remove(this);
 
-            energy -= SURVIVAL_COST * (float) 2.4;
+            energy -= SURVIVAL_COST;
             if (energy <= 0) {
                 energy = 0;
-                health -= STARVATION_DAMAGE * (float) 2.4;
+                health -= STARVATION_DAMAGE;
                 detach();
             }
 
@@ -625,7 +617,7 @@ public class Old extends PApplet {
 
             if (moving && energy > speed) {
                 nucleus.force(PVector.sub(target, nucleus.position).limit(speed));
-                energy -= MOVEMENT_COST * (float) 2.4;
+                energy -= MOVEMENT_COST;
             }
 
             HashSet<Cell> detached = new HashSet<>();
@@ -674,7 +666,7 @@ public class Old extends PApplet {
                 }
             }
 
-            float rate = ENERGY_TRANSFER_RATE * (float) 2.4 / transfers.size();
+            float rate = ENERGY_TRANSFER_RATE / transfers.size();
             for (Cell cell : transfers) {
                 this.energy -= rate;
                 cell.energy += rate;
@@ -1336,11 +1328,11 @@ public class Old extends PApplet {
             this.rate = rate;
         }
 
-        void update(float delta) {
+        void update() {
             HashSet<Cell> cells = inRange();
 
             for (Cell cell : cells)
-                cell.energy = constrain(cell.energy + rate * delta, 0, MAX_ENERGY);
+                cell.energy = constrain(cell.energy + rate, 0, MAX_ENERGY);
         }
 
         void draw() {
@@ -1947,7 +1939,7 @@ public class Old extends PApplet {
 
             force.div(mass);
             velocity.add(force);
-            position.add(PVector.mult(velocity, (float) 2.4));
+            position.add(velocity);
             force.set(0, 0);
 
             boundsCheck();
