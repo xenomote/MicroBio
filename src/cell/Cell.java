@@ -149,8 +149,13 @@ public class Cell implements Spatial {
         g.noStroke();
 
         PVector a = membrane.getPosition();
-        // TODO: 26/07/2020 tint color based on health
-        g.fill(commander.getColour());
+        float x = health / MAX_HEALTH;
+        float rd = g.red(commander.getColour()) * x;
+        float gr = g.green(commander.getColour()) * x;
+        float bl = g.blue(commander.getColour()) * x;
+        // TODO: 30/07/2020 investigate arithmetic colour tinting
+
+        g.fill(g.color(rd, gr, bl));
         g.square(a.x, a.y, MEMBRANE_RADIUS);
 
         PVector b = nucleus.getPosition();

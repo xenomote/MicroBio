@@ -1,20 +1,12 @@
 package game;
 
 import cell.*;
-import commander.AggressiveAICommander;
-import commander.Commander;
-import commander.PlayerCommander;
-import controller.Camera;
-import controller.CameraControls;
-import controller.Keyboard;
-import controller.Mouse;
-import processing.core.PApplet;
-import processing.core.PVector;
-import processing.event.KeyEvent;
-import processing.event.MouseEvent;
+import space.*;
+import commander.*;
+import controller.*;
+import processing.core.*;
+import processing.event.*;
 import processing.sound.SoundFile;
-import space.QuadSpaceGroup;
-import space.Space;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +24,9 @@ public class Game extends PApplet {
     public static final int BLUE = 0xFF0000FF;
     public static final int RED = 0xFFFF0000;
 
-    public static final int STARTING_CELLS = 10;
-    public static final int OPPOSITION_AIS = 10;
-    public static final int ENERGY_SOURCES = 100;
+    public static final int STARTING_CELLS = 20;
+    public static final int OPPOSITION_AIS = 20;
+    public static final int ENERGY_SOURCES = 10;
 
     SoundFile[] splat;
     SoundFile music;

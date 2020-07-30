@@ -12,7 +12,7 @@ import static processing.core.PVector.dist;
 public class Colonist extends Individual {
     public static final float DIVISION_MINIMUM = 50;
     public static final float ENERGY_TRANSFER_RATE = 1f;
-    public static final int DIVISION_COOLDOWN = 100;
+    public static final int DIVISION_COOLDOWN = 1000;
 
     private int divisionCooldown;
 
