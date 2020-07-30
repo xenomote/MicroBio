@@ -4,6 +4,7 @@ import cell.Cell;
 import game.EnergySource;
 import group.Colony;
 import group.Squadron;
+import processing.core.PVector;
 import space.Space;
 
 public class AggressiveAICommander extends Commander {
@@ -21,8 +22,8 @@ public class AggressiveAICommander extends Commander {
         super.update();
 
         for (Squadron squadron : getSquadrons())
-            if (squadron.idle());
-                // TODO: 26/07/2020 randomise position
+            if (squadron.idle())
+                squadron.rally.add(PVector.random2D());
 
         for (Colony colony : getColonies()) {
             int spare = (int) ((colony.size() - minimum) * aggression);

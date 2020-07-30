@@ -24,9 +24,9 @@ public class Game extends PApplet {
     public static final int BLUE = 0xFF0000FF;
     public static final int RED = 0xFFFF0000;
 
-    public static final int STARTING_CELLS = 20;
+    public static final int STARTING_CELLS = 10;
     public static final int OPPOSITION_AIS = 20;
-    public static final int ENERGY_SOURCES = 10;
+    public static final int ENERGY_SOURCES = 3;
 
     SoundFile[] splat;
     SoundFile music;
@@ -195,6 +195,8 @@ public class Game extends PApplet {
         }
 
         render();
+
+        if (keyboard.key('\n').held() == 1) reset();
     }
 
     private void render() {

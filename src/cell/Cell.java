@@ -16,10 +16,12 @@ public class Cell implements Spatial {
     public static final float NUCLEUS_RADIUS = 10;
     public static final float MEMBRANE_RADIUS = 25;
 
-    public static final float NUCLEUS_MASS = 10;
-    public static final float MEMBRANE_MASS = 10;
+    public static final float NUCLEUS_MASS = 5;
+    public static final float MEMBRANE_MASS = 5;
 
-    public static final float CELL_SPEED = 5;
+    public static final float CELL_SPEED = 1;
+    public static final float MOVEMENT_DAMPING = 0.5f;
+    public static final float SPRING_CONSTANT = 0.5f;
 
     public static final float MAX_HEALTH = 100;
     public static final float STARVATION_DAMAGE = 0.1f;
@@ -52,8 +54,8 @@ public class Cell implements Spatial {
         this.attachments = new ArrayList<>();
         this.collisions = new ArrayList<>();
 
-        this.nucleus = new Physics(position.copy(), NUCLEUS_MASS, 0.5f);
-        this.membrane = new Physics(position.copy(), MEMBRANE_MASS, 0.5f);
+        this.nucleus = new Physics(position.copy(), NUCLEUS_MASS, MOVEMENT_DAMPING);
+        this.membrane = new Physics(position.copy(), MEMBRANE_MASS, MOVEMENT_DAMPING);
         this.collider = new Collider<>(this, commander.cellMap(), collisions);
 
         this.cache_position = position.copy();
@@ -72,10 +74,10 @@ public class Cell implements Spatial {
     }
 
     public void update() {
-        Physics.spring(nucleus, membrane, 0, 0.5f);
+        Physics.spring(nucleus, membrane, 0, SPRING_CONSTANT);
 
-        collisions.forEach(cell -> Physics.spring(this.nucleus, cell.nucleus, this.getRadius() + cell.getRadius(), 1));
-        attachments.forEach(cell -> Physics.spring(this.nucleus, cell.nucleus, (this.getRadius() + cell.getRadius()) * 0.9f , 1));
+        collisions.forEach(cell -> Physics.spring(this.nucleus, cell.nucleus, this.getRadius() + cell.getRadius(), SPRING_CONSTANT));
+        attachments.forEach(cell -> Physics.spring(this.nucleus, cell.nucleus, (this.getRadius() + cell.getRadius()) * 0.9f , SPRING_CONSTANT));
 
         useEnergy(SURVIVAL_COST);
         if (movement.moving()) useEnergy(MOVEMENT_COST);
