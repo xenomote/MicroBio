@@ -7,9 +7,10 @@ public class Button {
 
     public void update() {
         if (pressed) held++;
-        if (released)
-            if (held > 0) held = 0;
-            else released = false;
+        if (released) {
+            held = 0;
+            released = false;
+        }
     }
 
     void press() {

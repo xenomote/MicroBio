@@ -25,7 +25,7 @@ public class Game extends PApplet {
     public static final int RED = 0xFFFF0000;
 
     public static final int STARTING_CELLS = 10;
-    public static final int OPPOSITION_AIS = 20;
+    public static final int OPPOSITION_AIS = 0;
     public static final int ENERGY_SOURCES = 3;
 
     SoundFile[] splat;
@@ -185,8 +185,10 @@ public class Game extends PApplet {
 
         mouse.update();
         keyboard.update();
+
         camera_controls.update();
         camera_body.update();
+
         ui.update();
 
         if (!ended && commanders.size() == 1) {
@@ -202,8 +204,8 @@ public class Game extends PApplet {
     private void render() {
         background(DARK_GREY);
         drawCameraView();
-        player.drawMouse(g);
 
+        player.drawMouse(g);
 
         printStatistics();
 
@@ -269,12 +271,15 @@ public class Game extends PApplet {
         }
 
         player.highlightCells(g);
+        player.highlightSelection(g);
 
         cells.forEach(cell -> cell.draw(g));
         attacks.forEach(attack -> attack.draw(g));
 
         if (ui.energy()) drawEnergyLevels();
         if (ui.partition()) cell_map.draw(g);
+
+        player.drawSelection(g);
 
         popMatrix();
     }

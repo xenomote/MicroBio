@@ -12,14 +12,14 @@ import static processing.core.PConstants.CORNERS;
 import static processing.core.PConstants.RADIUS;
 
 public class QuadSpaceRegion<T extends Spatial> extends QuadSpace<T> {
-    ArrayList<T> items;
+    private ArrayList<T> items;
 
     QuadSpaceRegion(PVector min, PVector max) {
         super(min, max);
         this.items = new ArrayList<>(ITEMS_PER_REGION);
     }
 
-    QuadSpaceRegion(QuadSpaceGroup<T> group) {
+    QuadSpaceRegion(QuadSpace<T> group) {
         this(group.min, group.max);
 
         items.addAll(group.get_items());

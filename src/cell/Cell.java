@@ -168,7 +168,7 @@ public class Cell implements Spatial {
     public void highlight(PGraphics g) {
         PVector a = membrane.getPosition();
 
-        g.fill(WHITE,  255/4f);
+        g.fill(WHITE,  256/2f);
         g.circle(a.x, a.y, MEMBRANE_RADIUS * 4);
     }
 

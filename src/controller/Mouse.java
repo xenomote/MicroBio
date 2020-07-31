@@ -15,6 +15,7 @@ public class Mouse {
 
     private ScreenTranslation mapping;
     private PVector coordinates;
+
     private PVector position;
     private PVector delta;
 
@@ -36,6 +37,8 @@ public class Mouse {
         left.update();
         middle.update();
         right.update();
+
+        mapping.set(position);
 
         if (fresh) fresh = false;
         else {
@@ -81,7 +84,6 @@ public class Mouse {
         delta.set(PVector.sub(position, mouse));
 
         position.set(mouse);
-        mapping.set(mouse);
 
         fresh = true;
     }

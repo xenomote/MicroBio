@@ -30,7 +30,6 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
         region.get_items().forEach(this::place);
     }
 
-    // TODO: 27/07/2020 redistribute subgroups
     @Override
     public void place(T item) {
         PVector position = item.getPosition();
@@ -64,8 +63,6 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
 
         space.place(item);
 
-        assert(space.itemCount() != ITEMS_PER_REGION);
-
         return space;
     }
 
@@ -76,25 +73,35 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
 
         if (position.x < mid.x) {
             if (position.y < mid.y) {
-                TL.remove(item);
+                TL = remove(TL, item);
             }
 
             else {
-                BL.remove(item);
+                BL = remove(BL, item);
             }
         }
 
         else {
             if (position.y < mid.y) {
-                TR.remove(item);
+                TR = remove(TR, item);
             }
 
             else {
-                BR.remove(item);
+                BR = remove(BR, item);
             }
         }
 
         itemCount--;
+    }
+
+    // TODO: 30/07/2020 reclaim unused regions
+    private QuadSpace<T> remove(QuadSpace<T> space, T item) {
+        if (space.itemCount() == 0 && space instanceof QuadSpaceGroup)
+            space = new QuadSpaceRegion<>(space);
+
+        space.remove(item);
+
+        return space;
     }
 
     ArrayList<T> get_items() {

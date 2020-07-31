@@ -11,7 +11,9 @@ import space.Space;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.Game.WHITE;
+import static game.Game.*;
+import static processing.core.PApplet.max;
+import static processing.core.PApplet.min;
 
 public class PlayerCommander extends Commander {
     private Mouse mouse;
@@ -35,17 +37,28 @@ public class PlayerCommander extends Commander {
     public void update() {
         super.update();
 
-        if (mouse.left().held() > 0)
-            b.set(mouse.coordinates());
-
-        else if (mouse.left().pressed())
+        if (!mouse.left().pressed())
             a.set(mouse.coordinates());
+        b.set(mouse.coordinates());
 
-        else if (mouse.left().released())
-            selection = cellMap().get(a, b);
+        if (mouse.left().released()) {
+            PVector x = new PVector(min(a.x, b.x), min(a.y, b.y));
+            PVector y = new PVector(max(a.x, b.x), max(a.y, b.y));
 
-        if (keyboard.key(' ').pressed())
-            selection = cells();
+            selection = cellMap().get(x, y);
+            selection.retainAll(cells());
+
+            a.set(0, 0);
+            b.set(0, 0);
+        }
+
+        else if (keyboard.key(' ').held() == 1) {
+            if (selection.isEmpty()) selection = cells();
+            else selection.clear();
+
+            a.set(0, 0);
+            b.set(0, 0);
+        }
 
         if (!selection.isEmpty()) {
             if (keyboard.key('c').pressed()) place_colony(selection, mouse.coordinates());
@@ -63,6 +76,25 @@ public class PlayerCommander extends Commander {
     }
 
     public void drawSelection(PGraphics g) {
+        if (mouse.left().pressed()) {
+            PVector x = new PVector(min(a.x, b.x), min(a.y, b.y));
+            PVector y = new PVector(max(a.x, b.x), max(a.y, b.y));
 
+            g.rectMode(CORNERS);
+            g.fill(WHITE, 256/2f);
+            g.rect(x.x, x.y, y.x, y.y);
+            g.rectMode(RADIUS);
+
+            g.fill(RED);
+            g.circle(x.x, x.y, 20);
+
+            g.fill(BLUE);
+            g.circle(y.x, y.y, 20);
+        }
+    }
+
+    public void highlightSelection(PGraphics g) {
+        for (Cell cell : selection)
+            cell.highlight(g);
     }
 }
