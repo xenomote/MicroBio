@@ -96,8 +96,9 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
 
     // TODO: 30/07/2020 reclaim unused regions
     private QuadSpace<T> remove(QuadSpace<T> space, T item) {
-        if (space.itemCount() == 0 && space instanceof QuadSpaceGroup)
+        if (space.itemCount() == 1 && space instanceof QuadSpaceGroup) {
             space = new QuadSpaceRegion<>(space);
+        }
 
         space.remove(item);
 
@@ -147,5 +148,7 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
         TR.draw(g);
         BL.draw(g);
         BR.draw(g);
+
+        g.text(itemCount, mid.x, mid.y);
     }
 }

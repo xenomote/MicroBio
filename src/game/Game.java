@@ -235,9 +235,11 @@ public class Game extends PApplet {
 
         attacks.forEach(Attack::update);
 
-        cells.forEach(cell_map::remove);
-        cells.forEach(Cell::updatePosition);
-        cells.forEach(cell_map::place);
+        cells.forEach(cell -> {
+            cell_map.remove(cell);
+            cell.updatePosition();
+            cell_map.place(cell);
+        });
 
         cells.forEach(Cell::update);
 
