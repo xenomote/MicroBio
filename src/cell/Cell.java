@@ -36,8 +36,8 @@ public class Cell implements Spatial {
 
     private Commander commander;
 
-    private Physics nucleus;
-    private Physics membrane;
+    private PointMass nucleus;
+    private PointMass membrane;
 
     private Collider<Cell> collider;
     private Movement movement;
@@ -54,8 +54,8 @@ public class Cell implements Spatial {
         this.attachments = new ArrayList<>();
         this.collisions = new ArrayList<>();
 
-        this.nucleus = new Physics(position.copy(), NUCLEUS_MASS, MOVEMENT_DAMPING);
-        this.membrane = new Physics(position.copy(), MEMBRANE_MASS, MOVEMENT_DAMPING);
+        this.nucleus = new PointMass(position.copy(), NUCLEUS_MASS, MOVEMENT_DAMPING);
+        this.membrane = new PointMass(position.copy(), MEMBRANE_MASS, MOVEMENT_DAMPING);
         this.collider = new Collider<>(this, commander.cellMap(), collisions);
 
         this.cache_position = position.copy();
@@ -74,10 +74,10 @@ public class Cell implements Spatial {
     }
 
     public void update() {
-        Physics.spring(nucleus, membrane, 0, SPRING_CONSTANT);
+        PointMass.spring(nucleus, membrane, 0, SPRING_CONSTANT);
 
-        collisions.forEach(cell -> Physics.spring(this.nucleus, cell.nucleus, this.getRadius() + cell.getRadius(), SPRING_CONSTANT));
-        attachments.forEach(cell -> Physics.spring(this.nucleus, cell.nucleus, (this.getRadius() + cell.getRadius()) * 0.9f , SPRING_CONSTANT));
+        collisions.forEach(cell -> PointMass.spring(this.nucleus, cell.nucleus, this.getRadius() + cell.getRadius(), SPRING_CONSTANT));
+        attachments.forEach(cell -> PointMass.spring(this.nucleus, cell.nucleus, (this.getRadius() + cell.getRadius()) * 0.9f , SPRING_CONSTANT));
 
         useEnergy(SURVIVAL_COST);
         if (movement.moving()) useEnergy(MOVEMENT_COST);
@@ -110,11 +110,11 @@ public class Cell implements Spatial {
         energy = min(energy + extra, MAX_ENERGY);
     }
 
-    public Physics getNucleus() {
+    public PointMass getNucleus() {
         return nucleus;
     }
 
-    public Physics getMembrane() {
+    public PointMass getMembrane() {
         return membrane;
     }
 

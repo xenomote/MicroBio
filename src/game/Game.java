@@ -34,7 +34,7 @@ public class Game extends PApplet {
     private Mouse mouse;
     private Keyboard keyboard;
     private Camera camera;
-    private Physics camera_body;
+    private PointMass camera_body;
     private CameraControls camera_controls;
 
     private UIControl ui;
@@ -50,7 +50,7 @@ public class Game extends PApplet {
     List<Commander> commanders;
 
     private List<Attack> attacks;
-    private List<Physics> physics;
+    private List<PointMass> physics;
     private List<Movement> movement;
     private List<Collider<Cell>> colliders;
 
@@ -121,7 +121,7 @@ public class Game extends PApplet {
         PVector position = new PVector();
 
         camera = new Camera(position);
-        camera_body = new Physics(position, 1, 0.9f);
+        camera_body = new PointMass(position, 1, 0.9f);
         camera.zoom(0.5f);
 
         mouse = new Mouse(camera);

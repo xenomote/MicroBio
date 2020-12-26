@@ -7,19 +7,19 @@ import static processing.core.PVector.dist;
 public class Movement {
     private PVector target;
     private PVector position;
-    private Physics physics;
+    private PointMass pointMass;
     private float force;
 
-    public Movement(PVector target, Physics physics, float force) {
+    public Movement(PVector target, PointMass pointMass, float force) {
         this.target = target;
-        this.physics = physics;
+        this.pointMass = pointMass;
         this.force = force;
 
-        this.position = physics.getPosition();
+        this.position = pointMass.getPosition();
     }
 
     public void update() {
-        if (moving()) physics.force(PVector.sub(target, position).setMag(force));
+        if (moving()) pointMass.force(PVector.sub(target, position).setMag(force));
         else target.set(position);
     }
 

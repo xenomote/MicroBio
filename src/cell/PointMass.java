@@ -2,7 +2,7 @@ package cell;
 
 import processing.core.PVector;
 
-public class Physics {
+public class PointMass {
     private PVector acceleration;
     private PVector velocity;
     private PVector position;
@@ -12,7 +12,7 @@ public class Physics {
 
     private PVector force_total;
 
-    public Physics(PVector position, float mass, float damping) {
+    public PointMass(PVector position, float mass, float damping) {
         assert(mass > 0);
         assert(damping >= 0);
         assert(damping <= 1);
@@ -57,17 +57,17 @@ public class Physics {
         return acceleration;
     }
 
-    private PVector to(Physics b) {
+    private PVector to(PointMass b) {
         return PVector.sub(position, b.position);
     }
 
-    static void spring(Physics a, Physics b, float d, float k) {
+    static void spring(PointMass a, PointMass b, float d, float k) {
         float force = -(dist(a, b) - d) * k;
         a.force(a.to(b).setMag(force));
         b.force(b.to(a).setMag(force));
     }
 
-    static float dist(Physics a, Physics b) {
+    static float dist(PointMass a, PointMass b) {
         return PVector.dist(a.position, b.position);
     }
 

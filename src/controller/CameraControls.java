@@ -1,6 +1,6 @@
 package controller;
 
-import cell.Physics;
+import cell.PointMass;
 import processing.core.PVector;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public class CameraControls extends Controller {
     public static final float MAX_ZOOM = 2;
 
     private Camera camera;
-    private Physics physics;
+    private PointMass pointMass;
     private float speed;
 
     private List<Button> W;
@@ -22,10 +22,10 @@ public class CameraControls extends Controller {
     private List<Button> S;
     private List<Button> D;
 
-    public CameraControls(Mouse mouse, Keyboard keyboard, Camera camera, Physics physics, float speed) {
+    public CameraControls(Mouse mouse, Keyboard keyboard, Camera camera, PointMass pointMass, float speed) {
         super(mouse, keyboard);
         this.camera = camera;
-        this.physics = physics;
+        this.pointMass = pointMass;
         this.speed = speed;
 
         this.W = List.of(keyboard.key('w'), keyboard.code(UP));
@@ -43,13 +43,13 @@ public class CameraControls extends Controller {
         if (keyboard.key('-').held() == 1) step--;
         camera.zoom(constrain(zoom + step * ZOOM_STEP, MIN_ZOOM, MAX_ZOOM));
 
-        if (mouse.middle().pressed()) physics.force(PVector.div(mouse.delta(), zoom));
+        if (mouse.middle().pressed()) pointMass.force(PVector.div(mouse.delta(), zoom));
 
         float scale = keyboard.code(SHIFT).pressed() ? zoom / 5 : zoom;
 
-        if (W.stream().anyMatch(Button::pressed)) physics.force(new PVector(0, -speed).div(scale));
-        if (A.stream().anyMatch(Button::pressed)) physics.force(new PVector(-speed, 0).div(scale));
-        if (S.stream().anyMatch(Button::pressed)) physics.force(new PVector(0, speed).div(scale));
-        if (D.stream().anyMatch(Button::pressed)) physics.force(new PVector(speed, 0).div(scale));
+        if (W.stream().anyMatch(Button::pressed)) pointMass.force(new PVector(0, -speed).div(scale));
+        if (A.stream().anyMatch(Button::pressed)) pointMass.force(new PVector(-speed, 0).div(scale));
+        if (S.stream().anyMatch(Button::pressed)) pointMass.force(new PVector(0, speed).div(scale));
+        if (D.stream().anyMatch(Button::pressed)) pointMass.force(new PVector(speed, 0).div(scale));
     }
 }
