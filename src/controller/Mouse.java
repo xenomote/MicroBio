@@ -48,35 +48,17 @@ public class Mouse {
     }
 
     public void handleMouseEvent(MouseEvent event) {
-        Button button;
-        switch (event.getButton()) {
-            case LEFT:
-                button = left;
-                break;
-
-            case RIGHT:
-                button = right;
-                break;
-
-            case CENTER:
-                button = middle;
-                break;
-
-            default:
-                button = new Button();
-        }
+        Button button = switch (event.getButton()) {
+            case LEFT -> left;
+            case RIGHT -> right;
+            case CENTER -> middle;
+            default -> new Button();
+        };
 
         switch (event.getAction()) {
-            case MouseEvent.PRESS:
-                button.press();
-                break;
-
-            case MouseEvent.RELEASE:
-                button.release();
-                break;
-
-            case MouseEvent.WHEEL:
-                scroll = event.getCount();
+            case MouseEvent.PRESS -> button.press();
+            case MouseEvent.RELEASE -> button.release();
+            case MouseEvent.WHEEL -> scroll = event.getCount();
         }
 
         PVector mouse = new PVector(event.getX(), event.getY());

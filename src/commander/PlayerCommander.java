@@ -12,16 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static game.Game.*;
-import static processing.core.PApplet.max;
-import static processing.core.PApplet.min;
 
 public class PlayerCommander extends Commander {
-    private Mouse mouse;
-    private Keyboard keyboard;
+    private final Mouse mouse;
+    private final Keyboard keyboard;
     private List<Cell> selection;
 
-    private PVector a;
-    private PVector b;
+    private final PVector a;
+    private final PVector b;
 
     public PlayerCommander(Space<Cell> cell_map, Space<EnergySource> source_map, int colour, Mouse mouse, Keyboard keyboard) {
         super(cell_map, source_map, colour);
@@ -60,6 +58,7 @@ public class PlayerCommander extends Commander {
             b.set(0, 0);
         }
 
+        // TODO: 26/12/2020 remove cells from original groups before adding new group
         if (!selection.isEmpty()) {
             if (keyboard.key('c').pressed()) place_colony(selection, mouse.coordinates());
             else if (keyboard.key('x').pressed()) place_squadron(selection, mouse.coordinates());

@@ -19,7 +19,7 @@ public class Cell implements Spatial {
     public static final float NUCLEUS_MASS = 5;
     public static final float MEMBRANE_MASS = 5;
 
-    public static final float CELL_SPEED = 1;
+    public static final float CELL_SPEED = 10;
     public static final float MOVEMENT_DAMPING = 0.5f;
     public static final float SPRING_CONSTANT = 0.5f;
 
@@ -30,23 +30,23 @@ public class Cell implements Spatial {
     public static final float SURVIVAL_COST = 0.1f;
     public static final float MOVEMENT_COST = 0.2f;
 
-    private float radius;
+    private final float radius;
     private float health;
     private float energy;
 
-    private Commander commander;
+    private final Commander commander;
 
-    private PointMass nucleus;
-    private PointMass membrane;
+    private final PointMass nucleus;
+    private final PointMass membrane;
 
-    private Collider<Cell> collider;
-    private Movement movement;
+    private final Collider<Cell> collider;
+    private final Movement movement;
 
-    private PVector cache_position;
-    private PVector target;
+    private final PVector cache_position;
+    private final PVector target;
 
-    private List<Cell> attachments;
-    private List<Cell> collisions;
+    private final List<Cell> attachments;
+    private final List<Cell> collisions;
 
     public Cell(Commander commander, PVector position) {
         this.commander = commander;

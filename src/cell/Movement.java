@@ -5,10 +5,10 @@ import processing.core.PVector;
 import static processing.core.PVector.dist;
 
 public class Movement {
-    private PVector target;
-    private PVector position;
-    private PointMass pointMass;
-    private float force;
+    private final PVector target;
+    private final PVector position;
+    private final PointMass pointMass;
+    private final float force;
 
     public Movement(PVector target, PointMass pointMass, float force) {
         this.target = target;

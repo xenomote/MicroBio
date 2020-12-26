@@ -71,7 +71,8 @@ public abstract class Group {
     public void update() {
         members.values().forEach(Individual::update);
         members.keySet().removeIf(Cell::dead);
-    };
+    }
+
     public abstract void draw(PGraphics g);
 }
 

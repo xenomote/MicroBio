@@ -3,14 +3,14 @@ package cell;
 import processing.core.PVector;
 
 public class PointMass {
-    private PVector acceleration;
-    private PVector velocity;
-    private PVector position;
+    private final PVector acceleration;
+    private final PVector velocity;
+    private final PVector position;
 
-    private float mass;
-    private float damping;
+    private final float mass;
+    private final float damping;
 
-    private PVector force_total;
+    private final PVector force_total;
 
     public PointMass(PVector position, float mass, float damping) {
         assert(mass > 0);
@@ -57,6 +57,10 @@ public class PointMass {
         return acceleration;
     }
 
+    public PVector getForce() {
+        return force_total;
+    }
+
     private PVector to(PointMass b) {
         return PVector.sub(position, b.position);
     }
@@ -69,10 +73,6 @@ public class PointMass {
 
     static float dist(PointMass a, PointMass b) {
         return PVector.dist(a.position, b.position);
-    }
-
-    public PVector getForce() {
-        return force_total;
     }
 }
 
