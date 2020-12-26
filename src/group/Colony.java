@@ -6,7 +6,7 @@ import individual.Individual;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
-import static game.Game.BLUE;
+import static game.Colours.*;
 
 public class Colony extends Group {
     public PVector center;

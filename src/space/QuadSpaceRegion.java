@@ -5,8 +5,7 @@ import processing.core.PVector;
 
 import java.util.ArrayList;
 
-import static game.Game.RED;
-import static game.Game.WHITE;
+import static game.Colours.*;
 import static processing.core.PApplet.str;
 import static processing.core.PConstants.CORNERS;
 import static processing.core.PConstants.RADIUS;

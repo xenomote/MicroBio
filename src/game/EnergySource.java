@@ -10,7 +10,7 @@ import space.Spatial;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.Game.GREY;
+import static game.Colours.*;
 
 public class EnergySource implements Spatial {
     private PVector position;

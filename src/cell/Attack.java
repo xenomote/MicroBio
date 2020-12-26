@@ -3,7 +3,7 @@ package cell;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
-import static game.Game.WHITE;
+import static game.Colours.*;
 
 public class Attack {
     public static final int ATTACK_DURATION = 10;

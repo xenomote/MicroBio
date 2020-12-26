@@ -13,19 +13,13 @@ import java.util.List;
 
 import static cell.Cell.MEMBRANE_RADIUS;
 import static space.QuadSpace.QUAD_INSTANCE;
+import static game.Colours.*;
 
 public class Game extends PApplet {
     public static final float MAP_RADIUS = 2500;
 
-    public static final int BLACK = 0xFF000000;
-    public static final int WHITE = 0xFFFFFFFF;
-    public static final int GREY = 0xFF808080;
-    public static final int DARK_GREY = 0xFF404040;
-    public static final int BLUE = 0xFF0000FF;
-    public static final int RED = 0xFFFF0000;
-
-    public static final int STARTING_CELLS = 100;
-    public static final int OPPOSITION_AIS = 0;
+    public static final int STARTING_CELLS = 10;
+    public static final int OPPOSITION_AIS = 30;
     public static final int ENERGY_SOURCES = 20;
 
     SoundFile[] splat;

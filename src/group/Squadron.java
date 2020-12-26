@@ -10,8 +10,7 @@ import processing.core.PVector;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.Game.RED;
-import static game.Game.WHITE;
+import static game.Colours.*;
 import static processing.core.PVector.dist;
 
 public class Squadron extends Group {

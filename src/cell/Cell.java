@@ -8,18 +8,18 @@ import space.Spatial;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.Game.WHITE;
 import static processing.core.PApplet.max;
 import static processing.core.PApplet.min;
+import static game.Colours.*;
 
 public class Cell implements Spatial {
     public static final float NUCLEUS_RADIUS = 10;
     public static final float MEMBRANE_RADIUS = 25;
 
     public static final float NUCLEUS_MASS = 5;
-    public static final float MEMBRANE_MASS = 5;
+    public static final float MEMBRANE_MASS = 1;
 
-    public static final float CELL_SPEED = 10;
+    public static final float CELL_SPEED = 20;
     public static final float MOVEMENT_DAMPING = 0.5f;
     public static final float SPRING_CONSTANT = 0.5f;
 

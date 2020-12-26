@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static game.Game.*;
+import static game.Colours.*;
 
 public class PlayerCommander extends Commander {
     private final Mouse mouse;
