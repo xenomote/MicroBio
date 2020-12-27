@@ -35,16 +35,18 @@ public abstract class QuadSpace<T extends Spatial> implements Space<T> {
         return min.x <= point.x - range
                 && max.x > point.x + range
                 && min.y <= point.y - range
-                && max.y > point.y + range
-                ;
+                && max.y > point.y + range;
     }
 
     boolean intersects(PVector p, float r) {
         return min.x < p.x + r && min.y < p.y + r && p.x - r < max.x && p.y - r < max.y;
     }
 
-    boolean intersects(PVector a, PVector b) {
-        return min.x < b.x && min.y < b.y && a.x < max.x && a.y < max.y;
+    boolean intersects(PVector min, PVector max) {
+        return this.min.x <= max.x
+                && this.min.y <= max.y
+                && this.max.x >= min.x
+                && this.max.y >= min.y;
     }
 
     boolean out_of_bounds(T item) {

@@ -113,14 +113,15 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
         return items;
     }
 
+    // TODO: 27/12/2020 check for bounds to add all in a subregion if completely contained by query
     @Override
-    public ArrayList<T> get(PVector a, PVector b) {
+    public ArrayList<T> get(PVector min, PVector max) {
         ArrayList<T> intersecting = new ArrayList<>(itemCount());
 
-        if (TL.intersects(a, b)) intersecting.addAll(TL.get(a, b));
-        if (TR.intersects(a, b)) intersecting.addAll(TR.get(a, b));
-        if (BL.intersects(a, b)) intersecting.addAll(BL.get(a, b));
-        if (BR.intersects(a, b)) intersecting.addAll(BR.get(a, b));
+        if (TL.intersects(min, max)) intersecting.addAll(TL.get(min, max));
+        if (TR.intersects(min, max)) intersecting.addAll(TR.get(min, max));
+        if (BL.intersects(min, max)) intersecting.addAll(BL.get(min, max));
+        if (BR.intersects(min, max)) intersecting.addAll(BR.get(min, max));
 
         return intersecting;
     }

@@ -4,6 +4,7 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import static game.Colours.*;
 import static processing.core.PApplet.str;
@@ -41,8 +42,13 @@ public class QuadSpaceRegion<T extends Spatial> extends QuadSpace<T> {
     }
 
     @Override
-    public ArrayList<T> get(PVector a, PVector b) {
-        return get_items();
+    public ArrayList<T> get(PVector min, PVector max) {
+        return items.stream().filter(item -> {
+            float x = item.getPosition().x;
+            float y = item.getPosition().y;
+
+            return x > min.x && x < max.x && y > min.y && y < max.y;
+        }).collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Override

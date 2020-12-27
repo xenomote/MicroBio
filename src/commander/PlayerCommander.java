@@ -17,7 +17,7 @@ import static game.Colours.*;
 public class PlayerCommander extends Commander {
     private final Mouse mouse;
     private final Keyboard keyboard;
-    private List<Cell> selection;
+    private final List<Cell> selection;
 
     private final PVector a;
     private final PVector b;
@@ -36,27 +36,26 @@ public class PlayerCommander extends Commander {
     public void update() {
         super.update();
 
-        if (!mouse.left().pressed())
-            a.set(mouse.coordinates());
-        b.set(mouse.coordinates());
+        if (mouse.left().pressed()) {
+            if (mouse.left().held() == 0) {
+                a.set(mouse.coordinates());
+            }
+
+            b.set(mouse.coordinates());
+        }
 
         if (mouse.left().released()) {
-            PVector x = new PVector(min(a.x, b.x), min(a.y, b.y));
-            PVector y = new PVector(max(a.x, b.x), max(a.y, b.y));
+            PVector min = new PVector(min(a.x, b.x), min(a.y, b.y));
+            PVector max = new PVector(max(a.x, b.x), max(a.y, b.y));
 
-            selection = cellMap().get(x, y);
+            selection.clear();
+            selection.addAll(cellMap().get(min, max));
             selection.retainAll(cells());
-
-            a.set(0, 0);
-            b.set(0, 0);
         }
 
         else if (keyboard.key(' ').held() == 1) {
-            if (selection.isEmpty()) selection = cells();
+            if (selection.isEmpty()) selection.addAll(cells());
             else selection.clear();
-
-            a.set(0, 0);
-            b.set(0, 0);
         }
 
         // TODO: 26/12/2020 remove cells from original groups before adding new group
@@ -69,6 +68,7 @@ public class PlayerCommander extends Commander {
     public void drawMouse(PGraphics g) {
         PVector position = mouse.position();
 
+        g.text(selection.size(), position.x, position.y);
         g.noFill();
         g.stroke(WHITE);
         g.strokeWeight(2);

@@ -10,7 +10,7 @@ public interface Space<T extends Spatial> {
     void place(T item);
     void remove(T item);
 
-    ArrayList<T> get(PVector a, PVector b);
+    ArrayList<T> get(PVector min, PVector max);
     ArrayList<T> get(PVector position, float radius);
 
     void draw(PGraphics g);
