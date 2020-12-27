@@ -16,7 +16,7 @@ public class Colonist extends Individual {
 
     private int divisionCooldown;
 
-    private Colony colony;
+    private final Colony colony;
 
     public Colonist(Cell cell, Colony colony) {
         super(cell);

@@ -8,8 +8,8 @@ import processing.core.PVector;
 import space.Space;
 
 public class AggressiveAICommander extends Commander {
-    private int minimum;
-    private float aggression;
+    private final int minimum;
+    private final float aggression;
 
     public AggressiveAICommander(Space<Cell> cell_map, Space<EnergySource> source_map, int colour, int minimum, float aggression) {
         super(cell_map, source_map, colour);

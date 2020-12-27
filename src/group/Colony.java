@@ -9,7 +9,7 @@ import processing.core.PVector;
 import static game.Colours.*;
 
 public class Colony extends Group {
-    public PVector center;
+    public final PVector center;
 
     public Colony(PVector center) {
         this.center = center.copy();

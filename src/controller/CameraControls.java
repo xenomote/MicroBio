@@ -13,14 +13,14 @@ public class CameraControls extends Controller {
     public static final float MIN_ZOOM = 0.1f;
     public static final float MAX_ZOOM = 2;
 
-    private Camera camera;
-    private PointMass pointMass;
-    private float speed;
+    private final Camera camera;
+    private final PointMass pointMass;
+    private final float speed;
 
-    private List<Button> W;
-    private List<Button> A;
-    private List<Button> S;
-    private List<Button> D;
+    private final List<Button> W;
+    private final List<Button> A;
+    private final List<Button> S;
+    private final List<Button> D;
 
     public CameraControls(Mouse mouse, Keyboard keyboard, Camera camera, PointMass pointMass, float speed) {
         super(mouse, keyboard);

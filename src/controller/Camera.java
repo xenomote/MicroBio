@@ -4,10 +4,10 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 public class Camera {
-    private PVector position;
+    private final PVector position;
     private float zoom;
 
-    private PVector size;
+    private final PVector size;
 
     public Camera(PVector position) {
 
@@ -42,7 +42,7 @@ public class Camera {
     }
 
     public class ScreenTranslation {
-        private PVector position;
+        private final PVector position;
 
         private ScreenTranslation(PVector position) {
             this.position = position;

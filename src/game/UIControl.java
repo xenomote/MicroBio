@@ -11,16 +11,16 @@ import java.util.Stack;
 import static processing.core.PConstants.CENTER;
 
 public class UIControl {
-    private Stack<String> messages;
+    private final Stack<String> messages;
 
-    private Toggle pause;
-    private Toggle partition;
-    private Toggle groups;
-    private Toggle energy;
-    private Toggle information;
+    private final Toggle pause;
+    private final Toggle partition;
+    private final Toggle groups;
+    private final Toggle energy;
+    private final Toggle information;
 
-    private Button SPACE;
-    private List<Toggle> toggles;
+    private final Button SPACE;
+    private final List<Toggle> toggles;
 
     public UIControl(Keyboard keyboard) {
         this.pause = new Toggle(keyboard.key('p'));

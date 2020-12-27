@@ -25,7 +25,7 @@ public class Combat extends Individual {
     private boolean recharging;
 
 
-    private Squadron squadron;
+    private final Squadron squadron;
 
     public Combat(Cell cell, Squadron squadron) {
         super(cell);

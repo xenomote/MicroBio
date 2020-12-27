@@ -1,7 +1,7 @@
 package game;
 
 import cell.Cell;
-import cell.Collider;
+import space.Area;
 import processing.core.PGraphics;
 import processing.core.PVector;
 import space.Space;
@@ -13,12 +13,12 @@ import java.util.List;
 import static game.Colours.*;
 
 public class EnergySource implements Spatial {
-    private PVector position;
-    private float radius;
-    float rate;
+    private final PVector position;
+    private final float radius;
+    private final float rate;
 
-    private Collider<Cell> collider;
-    private List<Cell> collisions;
+    private final Area<Cell> area;
+    private final List<Cell> collisions;
 
     EnergySource(PVector position, float radius, float rate, Space<Cell> cells) {
         this.position = position;
@@ -26,7 +26,7 @@ public class EnergySource implements Spatial {
         this.rate = rate;
 
         this.collisions = new ArrayList<>();
-        this.collider = new Collider<>(this, cells, collisions);
+        this.area = new Area<>(this, cells, collisions);
 
     }
 
@@ -40,8 +40,8 @@ public class EnergySource implements Spatial {
         g.circle(position.x, position.y, radius * 2);
     }
 
-    public Collider<Cell> getCollider() {
-        return collider;
+    public Area<Cell> getCollider() {
+        return area;
     }
 
     @Override

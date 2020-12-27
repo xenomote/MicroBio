@@ -11,7 +11,7 @@ import static processing.core.PApplet.sq;
 import static processing.core.PApplet.sqrt;
 
 public abstract class Group {
-    private Map<Cell, Individual> members;
+    private final Map<Cell, Individual> members;
 
     public Group() {
         this.members = new HashMap<>();

@@ -14,12 +14,12 @@ import java.util.*;
 import static processing.core.PVector.dist;
 
 public abstract class Commander {
-    private Space<Cell> cell_map;
-    private Space<EnergySource> source_map;
-    private List<Squadron> squadrons;
-    private List<Colony> colonies;
-    private Map<Group, Cell> spawned;
-    private int colour;
+    private final Space<Cell> cell_map;
+    private final Space<EnergySource> source_map;
+    private final List<Squadron> squadrons;
+    private final List<Colony> colonies;
+    private final Map<Group, Cell> spawned;
+    private final int colour;
 
     public Commander(Space<Cell> cell_map, Space<EnergySource> source_map, int colour) {
         this.cell_map = cell_map;

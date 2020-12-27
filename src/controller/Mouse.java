@@ -7,17 +7,17 @@ import processing.event.MouseEvent;
 import static processing.core.PConstants.*;
 
 public class Mouse {
-    private Button left;
-    private Button middle;
-    private Button right;
+    private final Button left;
+    private final Button middle;
+    private final Button right;
 
     private int scroll;
 
-    private ScreenTranslation mapping;
-    private PVector coordinates;
+    private final ScreenTranslation mapping;
+    private final PVector coordinates;
 
-    private PVector position;
-    private PVector delta;
+    private final PVector position;
+    private final PVector delta;
 
     private boolean fresh;
 

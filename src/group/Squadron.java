@@ -14,10 +14,10 @@ import static game.Colours.*;
 import static processing.core.PVector.dist;
 
 public class Squadron extends Group {
-    private Commander commander;
-    private List<Cell> targets;
+    private final Commander commander;
+    private final List<Cell> targets;
 
-    public PVector rally;
+    public final PVector rally;
 
     private int idle;
 

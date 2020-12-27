@@ -7,8 +7,8 @@ import java.util.HashMap;
 import static processing.core.PConstants.CODED;
 
 public class Keyboard {
-    HashMap<Character, Button> buttons;
-    HashMap<Integer, Button> special_buttons;
+    final HashMap<Character, Button> buttons;
+    final HashMap<Integer, Button> special_buttons;
 
     public Keyboard() {
         this.buttons = new HashMap<>();

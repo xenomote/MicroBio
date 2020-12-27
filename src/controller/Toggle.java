@@ -1,7 +1,7 @@
 package controller;
 
 public class Toggle {
-    private Button button;
+    private final Button button;
     private boolean toggle;
 
     public Toggle(Button button) {

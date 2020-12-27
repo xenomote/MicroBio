@@ -46,7 +46,7 @@ public class Game extends PApplet {
     private List<Attack> attacks;
     private List<PointMass> physics;
     private List<Movement> movement;
-    private List<Collider<Cell>> colliders;
+    private List<Area<Cell>> areas;
 
     private List<Cell> cells;
     private List<EnergySource> sources;
@@ -108,7 +108,7 @@ public class Game extends PApplet {
 
         physics = new ArrayList<>();
         movement = new ArrayList<>();
-        colliders = new ArrayList<>();
+        areas = new ArrayList<>();
 
         center = new PVector();
 
@@ -144,7 +144,7 @@ public class Game extends PApplet {
 
             PVector position = randomPosition().limit(MAP_RADIUS - radius);
             EnergySource source = new EnergySource(position, radius, 5f, cell_map);
-            colliders.add(source.getCollider());
+            areas.add(source.getCollider());
 
             sources.add(source);
         }
@@ -225,7 +225,7 @@ public class Game extends PApplet {
             physics.getPosition().limit(MAP_RADIUS);
         });
 
-        colliders.forEach(Collider::update);
+        areas.forEach(Area::update);
 
         attacks.forEach(Attack::update);
 
@@ -352,7 +352,7 @@ public class Game extends PApplet {
         physics.add(cell.getNucleus());
         physics.add(cell.getMembrane());
         movement.add(cell.getMovement());
-        colliders.add(cell.getCollider());
+        areas.add(cell.getCollider());
 
         cells.add(cell);
         cell_map.place(cell);
@@ -364,7 +364,7 @@ public class Game extends PApplet {
         physics.remove(cell.getNucleus());
         physics.remove(cell.getMembrane());
         movement.remove(cell.getMovement());
-        colliders.remove(cell.getCollider());
+        areas.remove(cell.getCollider());
 
         cells.remove(cell);
         cell_map.remove(cell);

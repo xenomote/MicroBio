@@ -3,6 +3,7 @@ package cell;
 import commander.Commander;
 import processing.core.PGraphics;
 import processing.core.PVector;
+import space.Area;
 import space.Spatial;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class Cell implements Spatial {
     private final PointMass nucleus;
     private final PointMass membrane;
 
-    private final Collider<Cell> collider;
+    private final Area<Cell> area;
     private final Movement movement;
 
     private final PVector cache_position;
@@ -56,7 +57,7 @@ public class Cell implements Spatial {
 
         this.nucleus = new PointMass(position.copy(), NUCLEUS_MASS, MOVEMENT_DAMPING);
         this.membrane = new PointMass(position.copy(), MEMBRANE_MASS, MOVEMENT_DAMPING);
-        this.collider = new Collider<>(this, commander.cellMap(), collisions);
+        this.area = new Area<>(this, commander.cellMap(), collisions);
 
         this.cache_position = position.copy();
         this.target = position.copy();
@@ -176,7 +177,7 @@ public class Cell implements Spatial {
         return movement;
     }
 
-    public Collider<Cell> getCollider() {
-        return collider;
+    public Area<Cell> getCollider() {
+        return area;
     }
 }

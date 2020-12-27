@@ -11,7 +11,7 @@ import static processing.core.PConstants.CORNERS;
 import static processing.core.PConstants.RADIUS;
 
 public class QuadSpaceRegion<T extends Spatial> extends QuadSpace<T> {
-    private ArrayList<T> items;
+    private final ArrayList<T> items;
 
     QuadSpaceRegion(PVector min, PVector max) {
         super(min, max);

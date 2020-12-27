@@ -9,7 +9,7 @@ public class Attack {
     public static final int ATTACK_DURATION = 10;
     public static final float ATTACK_RADIUS = 10;
 
-    private PVector position;
+    private final PVector position;
     private int lifespan;
 
     public Attack(PVector position) {

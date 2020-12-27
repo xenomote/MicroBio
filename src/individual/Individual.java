@@ -4,7 +4,7 @@ import cell.Cell;
 
 public abstract class Individual {
 
-    protected Cell cell;
+    protected final Cell cell;
 
     Individual(Cell cell) {
         this.cell = cell;
