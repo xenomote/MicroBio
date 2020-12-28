@@ -58,7 +58,8 @@ public class PlayerCommander extends Commander {
             else selection.clear();
         }
 
-        // TODO: 26/12/2020 remove cells from original groups before adding new group
+        selection.removeIf(Cell::dead);
+
         if (!selection.isEmpty()) {
             if (keyboard.key('c').pressed()) place_colony(selection, mouse.coordinates());
             else if (keyboard.key('x').pressed()) place_squadron(selection, mouse.coordinates());
