@@ -15,7 +15,6 @@ public class Colony extends Group {
         this.center = center.copy();
     }
 
-
     @Override
     Individual member(Cell cell) {
         return new Colonist(cell, this);

@@ -1,6 +1,8 @@
 package game;
 
 import cell.*;
+import group.Colony;
+import group.Group;
 import space.*;
 import commander.*;
 import controller.*;
@@ -158,7 +160,11 @@ public class Game extends PApplet {
         commanders.forEach(commander -> {
             EnergySource source = randomSource();
             PVector position = PVector.random2D().mult(source.getRadius()).add(source.getPosition());
-            commander.place_colony(group(commander, position, STARTING_CELLS), position);
+            Colony colony = new Colony(position);
+
+            spawn_group(commander, colony, position, STARTING_CELLS);
+
+            commander.getColonies().add(colony);
         });
 
 
@@ -201,7 +207,14 @@ public class Game extends PApplet {
 
         player.drawMouse(g);
 
-        printStatistics();
+        if (ui.information()) {
+            printStatistics();
+        }
+
+        fill(WHITE);
+        textAlign(RIGHT, TOP);
+        textSize(100);
+        text(str(player.size()), width, 0);
 
         if (ui.paused()) {
             textAlign(CENTER, TOP);
@@ -238,10 +251,16 @@ public class Game extends PApplet {
         cells.forEach(Cell::update);
 
         for (Cell cell : List.copyOf(cells)) {
-            if (cell.dead()) despawn(cell);
+            if (cell.dead()) {
+                cell.kill();
+                deregister(cell);
+            }
         }
 
-        commanders.forEach(commander -> commander.getSpawned().forEach(this::spawn));
+        commanders.forEach(commander -> {
+            commander.getSpawned().forEach(this::register);
+            commander.getSpawned().clear();
+        });
     }
 
     private int randomColor() {
@@ -296,37 +315,28 @@ public class Game extends PApplet {
     }
 
     void printStatistics() {
+        max_cells = max(max_cells, cells.size());
+        min_cells = min(min_cells, cells.size());
+
         fill(WHITE);
+        textAlign(LEFT, TOP);
+        textSize(18);
+        text(
+                "min: " + min_cells + "\n" +
+                "max: " + max_cells + "\n" +
+                "current: " + cells.size() + "\n" +
+                "quadrants: " + QUAD_INSTANCE + "\n" +
+                "fps: " + (frameRate < 25 ? "slowed " : "") + frameRate + ")",
 
-        if (ui.information()) {
-            max_cells = max(max_cells, cells.size());
-            min_cells = min(min_cells, cells.size());
-
-            textAlign(LEFT, TOP);
-            textSize(18);
-            text(
-                    "min: " + min_cells + "\n" +
-                    "max: " + max_cells + "\n" +
-                    "current: " + cells.size() + "\n" +
-                    "quadrants: " + QUAD_INSTANCE + "\n" +
-                    "fps: " + (frameRate < 25 ? "slowed " : "") + frameRate + ")",
-
-                    0, 0
-            );
-        }
-
-        textAlign(RIGHT, TOP);
-        textSize(100);
-        text(str(player.size()), width, 0);
+                0, 0
+        );
     }
 
     //##################################################################################################################
     // SPAWN METHODS
     //##################################################################################################################
 
-    private List<Cell> group(Commander commander, PVector center, int size) {
-        List<Cell> group = new ArrayList<>();
-
+    private void spawn_group(Commander commander, Group group, PVector center, int size) {
         float spacing = 2 * MEMBRANE_RADIUS;
         int side = ceil(sqrt((float)size)) - 1;
         PVector corner = PVector.sub(center, new PVector(side/2f, side/2f).mult(spacing));
@@ -338,17 +348,11 @@ public class Game extends PApplet {
             PVector offset = new PVector(x, y).mult(spacing);
             PVector position = PVector.add(corner, offset);
 
-            group.add(spawn(commander, position));
+            register(new Cell(commander, group, position));
         }
-
-        return group;
     }
 
-    private Cell spawn(Commander commander, PVector position) {
-        return spawn(new Cell(commander, position));
-    }
-
-    private Cell spawn(Cell cell) {
+    private void register(Cell cell) {
         physics.add(cell.getNucleus());
         physics.add(cell.getMembrane());
         movement.add(cell.getMovement());
@@ -356,11 +360,9 @@ public class Game extends PApplet {
 
         cells.add(cell);
         cell_map.place(cell);
-
-        return cell;
     }
 
-    private void despawn(Cell cell) {
+    private void deregister(Cell cell) {
         physics.remove(cell.getNucleus());
         physics.remove(cell.getMembrane());
         movement.remove(cell.getMovement());

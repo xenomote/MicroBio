@@ -16,9 +16,12 @@ import static processing.core.PVector.dist;
 public abstract class Commander {
     private final Space<Cell> cell_map;
     private final Space<EnergySource> source_map;
+
     private final List<Squadron> squadrons;
     private final List<Colony> colonies;
-    private final Map<Group, Cell> spawned;
+
+    private final List<Cell> cells;
+    private final List<Cell> spawned;
     private final int colour;
 
     public Commander(Space<Cell> cell_map, Space<EnergySource> source_map, int colour) {
@@ -28,7 +31,8 @@ public abstract class Commander {
         this.colonies = new ArrayList<>();
         this.squadrons = new ArrayList<>();
 
-        this.spawned = new HashMap<>();
+        this.cells = new ArrayList<>();
+        this.spawned = new ArrayList<>();
 
         this.colour = colour;
     }
@@ -60,17 +64,11 @@ public abstract class Commander {
     }
 
     public List<Cell> cells() {
-        List<Cell> cells = new ArrayList<>();
-
-        colonies.stream().map(Group::cells).forEach(cells::addAll);
-        squadrons.stream().map(Group::cells).forEach(cells::addAll);
-
         return cells;
     }
 
     public int size() {
-        return colonies.stream().mapToInt(Group::size).sum()
-                + squadrons.stream().mapToInt(Group::size).sum();
+        return cells.size();
     }
 
     public boolean inactive() {
@@ -78,9 +76,6 @@ public abstract class Commander {
     }
 
     public void update() {
-        spawned.forEach(Group::attach);
-        spawned.clear();
-
         colonies.removeIf(colony -> {
             colony.update();
             return colony.empty();
@@ -125,11 +120,11 @@ public abstract class Commander {
         return source_map;
     }
 
-    public void spawn(Group group, Cell cell) {
-        spawned.put(group, cell);
+    public void spawn(Cell cell) {
+        this.spawned.add(cell);
     }
 
-    public Collection<Cell> getSpawned() {
-        return spawned.values();
+    public List<Cell> getSpawned() {
+        return spawned;
     }
 }

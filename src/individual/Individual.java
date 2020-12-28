@@ -11,8 +11,4 @@ public abstract class Individual {
     }
 
     public abstract void update();
-
-    public boolean dead() {
-        return cell.dead();
-    }
 }

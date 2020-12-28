@@ -1,6 +1,7 @@
 package cell;
 
 import commander.Commander;
+import group.Group;
 import processing.core.PGraphics;
 import processing.core.PVector;
 import space.Area;
@@ -49,8 +50,14 @@ public class Cell implements Spatial {
     private final List<Cell> attachments;
     private final List<Cell> collisions;
 
-    public Cell(Commander commander, PVector position) {
+    private Group group;
+
+    public Cell(Commander commander, Group group, PVector position) {
         this.commander = commander;
+        this.commander.cells().add(this);
+
+        this.group = group;
+        this.group.attach(this);
 
         this.attachments = new ArrayList<>();
         this.collisions = new ArrayList<>();
@@ -72,6 +79,11 @@ public class Cell implements Spatial {
 
     public boolean dead() {
         return health <= 0;
+    }
+
+    public void kill() {
+        this.commander.cells().remove(this);
+        this.group.detach(this);
     }
 
     public void update() {
@@ -97,6 +109,14 @@ public class Cell implements Spatial {
 
     public Commander getCommander() {
         return commander;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public void useEnergy(float cost) {

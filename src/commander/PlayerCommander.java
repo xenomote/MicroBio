@@ -68,7 +68,6 @@ public class PlayerCommander extends Commander {
     public void drawMouse(PGraphics g) {
         PVector position = mouse.position();
 
-        g.text(selection.size(), position.x, position.y);
         g.noFill();
         g.stroke(WHITE);
         g.strokeWeight(2);
@@ -84,12 +83,6 @@ public class PlayerCommander extends Commander {
             g.fill(WHITE, 256/2f);
             g.rect(x.x, x.y, y.x, y.y);
             g.rectMode(RADIUS);
-
-            g.fill(RED);
-            g.circle(x.x, x.y, 20);
-
-            g.fill(BLUE);
-            g.circle(y.x, y.y, 20);
         }
     }
 

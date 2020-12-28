@@ -63,7 +63,7 @@ public class Colonist extends Individual {
     }
 
     private void divide() {
-        cell.getCommander().spawn(colony, new Cell(cell.getCommander(), PVector.random2D().add(cell.getPosition())));
+        cell.getCommander().spawn(new Cell(cell.getCommander(), cell.getGroup(), PVector.random2D().add(cell.getPosition())));
 
         divisionCooldown = DIVISION_COOLDOWN;
     }

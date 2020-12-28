@@ -24,7 +24,7 @@ public class Squadron extends Group {
     public Squadron(Commander commander, PVector rally) {
         this.commander = commander;
         this.targets = new ArrayList<>();
-        this.rally = rally;
+        this.rally = rally.copy();
 
         this.idle = 0;
     }

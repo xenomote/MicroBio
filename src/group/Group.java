@@ -11,9 +11,11 @@ import static processing.core.PApplet.sq;
 import static processing.core.PApplet.sqrt;
 
 public abstract class Group {
+    private final List<Cell> additions;
     private final Map<Cell, Individual> members;
 
     public Group() {
+        this.additions = new ArrayList<>();
         this.members = new HashMap<>();
     }
 
@@ -22,7 +24,7 @@ public abstract class Group {
     }
 
     public void attach(Cell cell) {
-        members.put(cell, member(cell));
+        additions.add(cell);
     }
 
     public void detach(List<Cell> group) {
@@ -70,7 +72,18 @@ public abstract class Group {
 
     public void update() {
         members.values().forEach(Individual::update);
-        members.keySet().removeIf(Cell::dead);
+
+        for (Cell cell : additions) {
+            if (members.containsKey(cell)) {
+                continue;
+            }
+
+            cell.getGroup().detach(cell);
+            cell.setGroup(this);
+            members.put(cell, member(cell));
+        }
+
+        additions.clear();
     }
 
     public abstract void draw(PGraphics g);
