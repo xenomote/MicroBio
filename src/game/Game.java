@@ -297,6 +297,8 @@ public class Game extends PApplet {
         player.drawSelection(g);
 
         popMatrix();
+
+        text(camera.getZoom(), width/2f, height/2f);
     }
 
     void drawMap() {

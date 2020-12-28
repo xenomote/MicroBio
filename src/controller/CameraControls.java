@@ -11,7 +11,7 @@ import static processing.core.PConstants.*;
 public class CameraControls extends Controller {
     public static final float ZOOM_STEP = 0.1f;
     public static final float MIN_ZOOM = 0.1f;
-    public static final float MAX_ZOOM = 2;
+    public static final float MAX_ZOOM = 0.9f;
 
     private final Camera camera;
     private final PointMass pointMass;
