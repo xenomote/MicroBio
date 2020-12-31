@@ -25,23 +25,30 @@ public class Colonist extends Individual {
     }
 
     public void update() {
-        if (divisionCooldown > 0) divisionCooldown--;
+        if (divisionCooldown > 0) {
+            divisionCooldown--;
+        }
 
         List<Cell> attachments = cell.getAttachments();
         attachments.clear();
 
-        for (Cell collision : cell.getCollisions())
-            if (collision.getCommander() == cell.getCommander())
+        for (Cell collision : cell.getCollisions()) {
+            if (colony.cells().contains(collision)) {
                 attachments.add(collision);
+            }
+        }
 
-        if (displaced())
+        if (displaced()) {
             cell.seek(colony.center);
+        }
 
         else {
             cell.stop();
             transfer();
 
-            if (canDivide()) divide();
+            if (canDivide()) {
+                divide();
+            }
         }
 
         transfer();
@@ -50,8 +57,9 @@ public class Colonist extends Individual {
     private void transfer() {
         List<Cell> recipients = new ArrayList<>();
         for (Cell other : cell.getAttachments()) {
-            if (other.getEnergy() < cell.getEnergy())
+            if (other.getEnergy() < cell.getEnergy()) {
                 recipients.add(other);
+            }
         }
 
         // TODO: 25/07/2020 dirty bit for energy updating between ticks

@@ -20,6 +20,12 @@ public class Colony extends Group {
         return new Colonist(cell, this);
     }
 
+    @Override
+    public void detach(Cell cell) {
+        super.detach(cell);
+        cell.getAttachments().clear();
+    }
+
     public void draw(PGraphics g) {
         g.fill(BLUE);
         g.stroke(0,0);
