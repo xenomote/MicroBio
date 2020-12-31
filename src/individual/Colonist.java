@@ -68,6 +68,7 @@ public class Colonist extends Individual {
         divisionCooldown = DIVISION_COOLDOWN;
     }
 
+    // TODO: 30/12/2020 randomise division rate
     private boolean canDivide() {
         return divisionCooldown == 0;// && cell.getEnergy() > DIVISION_MINIMUM;
     }

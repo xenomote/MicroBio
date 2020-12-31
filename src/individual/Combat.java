@@ -33,6 +33,7 @@ public class Combat extends Individual {
         this.recharging = false;
     }
 
+    // TODO: 29/12/2020 prevent repeated adding of attacker for instant damage
     public void update() {
         if (attackCooldown > 0) attackCooldown--;
 
@@ -71,6 +72,7 @@ public class Combat extends Individual {
         }
     }
 
+    // TODO: 29/12/2020 fix seeking towards targets
     private Optional<Cell> closestTarget() {
         List<Cell> cells = squadron.getCommander().cellMap().get(cell.getPosition(), DETECTION_RANGE);
 

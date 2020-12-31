@@ -60,6 +60,7 @@ public class PlayerCommander extends Commander {
 
         selection.removeIf(Cell::dead);
 
+        // TODO: 29/12/2020 move existing group if it is it is selected
         if (!selection.isEmpty()) {
             if (keyboard.key('c').pressed()) place_colony(selection, mouse.coordinates());
             else if (keyboard.key('x').pressed()) place_squadron(selection, mouse.coordinates());

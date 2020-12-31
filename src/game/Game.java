@@ -336,6 +336,7 @@ public class Game extends PApplet {
     // SPAWN METHODS
     //##################################################################################################################
 
+    // TODO: 30/12/2020 move spawning into separate class
     private void spawn_group(Commander commander, Group group, PVector center, int size) {
         float spacing = 2 * MEMBRANE_RADIUS;
         int side = ceil(sqrt((float)size)) - 1;
@@ -352,6 +353,7 @@ public class Game extends PApplet {
         }
     }
 
+    // TODO: 30/12/2020 move registration and deregistration into separate class
     private void register(Cell cell) {
         physics.add(cell.getNucleus());
         physics.add(cell.getMembrane());

@@ -24,6 +24,7 @@ public class Area<T extends Spatial> {
         }
     }
 
+    // TODO: 30/12/2020 improve collision detection
     private boolean colliding(T other) {
         return PVector.dist(item.getPosition(), other.getPosition()) < item.getRadius() + other.getRadius();
     }

@@ -37,6 +37,7 @@ public abstract class Commander {
         this.colour = colour;
     }
 
+    // TODO: 31/12/2020 generify group placement 
     public void place_squadron(List<Cell> cells, PVector position) {
         Squadron squadron = squadrons.stream()
                 .filter(s -> dist(position, s.rally) < s.radius())

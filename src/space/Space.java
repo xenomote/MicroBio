@@ -12,6 +12,7 @@ public interface Space<T extends Spatial> {
 
     ArrayList<T> get(PVector min, PVector max);
     ArrayList<T> get(PVector position, float radius);
+    // TODO: 31/12/2020 add distance sorted iterator method
 
     void draw(PGraphics g);
 

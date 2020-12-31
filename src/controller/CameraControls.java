@@ -17,6 +17,7 @@ public class CameraControls extends Controller {
     private final PointMass pointMass;
     private final float speed;
 
+    // TODO: 30/12/2020 refactor buttons into controller class
     private final List<Button> W;
     private final List<Button> A;
     private final List<Button> S;

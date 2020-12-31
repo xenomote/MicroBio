@@ -15,6 +15,7 @@ public class Keyboard {
         this.special_buttons = new HashMap<>();
     }
 
+    // TODO: 30/12/2020 use time based and event based updates
     public void update() {
         buttons.values().forEach(Button::update);
         special_buttons.values().forEach(Button::update);

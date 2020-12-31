@@ -41,6 +41,7 @@ public class Camera {
         return position;
     }
 
+    // TODO: 30/12/2020 refactor into separate class
     public class ScreenTranslation {
         private final PVector position;
 

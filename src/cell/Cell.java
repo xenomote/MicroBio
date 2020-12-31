@@ -32,6 +32,8 @@ public class Cell implements Spatial {
     public static final float SURVIVAL_COST = 0.1f;
     public static final float MOVEMENT_COST = 0.2f;
 
+    // TODO: 30/12/2020 refactor radius into the Area class
+    // TODO: 30/12/2020 refactor health and energy into Resources class
     private final float radius;
     private float health;
     private float energy;
