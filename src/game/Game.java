@@ -191,11 +191,6 @@ public class Game extends PApplet {
 
         ui.update();
 
-        if (!ended && commanders.size() == 1) {
-            ui.message(commanders.contains(player) ? "you win" : "you lose");
-            ended = true;
-        }
-
         render();
 
         if (keyboard.key('\n').held() == 1) reset();
@@ -231,6 +226,11 @@ public class Game extends PApplet {
             commander.update();
             return commander.inactive();
         });
+
+        if (!ended && (commanders.size() == 1 || player.inactive())) {
+            ui.message(commanders.contains(player) ? "you win" : "you lose");
+            ended = true;
+        }
 
         movement.forEach(Movement::update);
         physics.forEach(physics -> {

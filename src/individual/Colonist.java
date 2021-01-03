@@ -44,7 +44,6 @@ public class Colonist extends Individual {
 
         else {
             cell.stop();
-            transfer();
 
             if (canDivide()) {
                 divide();
@@ -62,8 +61,7 @@ public class Colonist extends Individual {
             }
         }
 
-        // TODO: 25/07/2020 dirty bit for energy updating between ticks
-        float rate = recipients.size() / ENERGY_TRANSFER_RATE;
+        float rate = ENERGY_TRANSFER_RATE / recipients.size();
         for (Cell other : recipients) {
             cell.useEnergy(rate);
             other.addEnergy(rate);

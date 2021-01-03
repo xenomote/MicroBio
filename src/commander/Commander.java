@@ -73,7 +73,7 @@ public abstract class Commander {
     }
 
     public boolean inactive() {
-        return colonies.isEmpty() && squadrons.isEmpty();
+        return cells.isEmpty();
     }
 
     public void update() {
