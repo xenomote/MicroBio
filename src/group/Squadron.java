@@ -42,7 +42,7 @@ public class Squadron extends Group {
         getTargets().clear();
         List<Cell> cells = commander.cellMap().get(rally, radius());
         for (Cell cell : cells) {
-            if (cell.getCommander() != commander && cell.getEnergy() > 0 && dist(cell.getPosition(), rally) < radius()) {
+            if (cell.getCommander() != commander && !cell.energy().empty() && dist(cell.getPosition(), rally) < radius()) {
                 getTargets().add(cell);
                 drift.add(PVector.sub(cell.getPosition(), rally));
             }

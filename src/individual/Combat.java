@@ -37,7 +37,7 @@ public class Combat extends Individual {
     public void update() {
         if (attackCooldown > 0) attackCooldown--;
 
-        if (cell.getEnergy() < MAX_ENERGY/2 || recharging) {
+        if (cell.energy().stored() < MAX_ENERGY/2 || recharging) {
             List<EnergySource> sources = squadron.getCommander().sourceMap().get(cell.getPosition(), DETECTION_RANGE);
 
             Optional<EnergySource> source = sources.stream().min((a, b) -> {
@@ -52,7 +52,7 @@ public class Combat extends Individual {
             if (source.isPresent()) cell.seek(source.get().getPosition());
             else cell.stop();
 
-            recharging = cell.getEnergy() != MAX_ENERGY;
+            recharging = !cell.energy().full();
         }
 
         else if (!inRallyRange(cell)) {
@@ -96,9 +96,9 @@ public class Combat extends Individual {
     }
 
     private void attack(Cell target) {
-        cell.useEnergy(ATTACK_COST);
+        cell.energy().sub(ATTACK_COST);
         attackCooldown = ATTACK_SPEED;
-        target.damage(ATTACK_DAMAGE);
+        target.health().sub(ATTACK_DAMAGE);
 
         PVector direction = PVector.sub(target.getPosition(), cell.getPosition());
         cell.force(direction.setMag(10));
@@ -111,6 +111,6 @@ public class Combat extends Individual {
     }
 
     private boolean canAttack() {
-        return attackCooldown == 0 && cell.getEnergy() > ATTACK_COST;
+        return attackCooldown == 0 && cell.energy().stored() > ATTACK_COST;
     }
 }

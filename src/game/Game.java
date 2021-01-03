@@ -310,7 +310,7 @@ public class Game extends PApplet {
         stroke(0,0);
 
         rectMode(CORNER);
-        for (Cell cell : cells) rect(cell.getPosition().x - 2, cell.getPosition().y, 4, -cell.getEnergy());
+        for (Cell cell : cells) rect(cell.getPosition().x - 2, cell.getPosition().y, 4, -cell.energy().stored());
         rectMode(RADIUS);
     }
 

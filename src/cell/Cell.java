@@ -33,10 +33,9 @@ public class Cell implements Spatial {
     public static final float MOVEMENT_COST = 0.2f;
 
     // TODO: 30/12/2020 refactor radius into the Area class
-    // TODO: 30/12/2020 refactor health and energy into Resources class
     private final float radius;
-    private float health;
-    private float energy;
+    private Resource health;
+    private Resource energy;
 
     private final Commander commander;
 
@@ -75,12 +74,12 @@ public class Cell implements Spatial {
 
         this.radius = MEMBRANE_RADIUS;
 
-        this.health = MAX_HEALTH;
-        this.energy = MAX_ENERGY;
+        this.health = new Resource(MAX_HEALTH, MAX_HEALTH);
+        this.energy = new Resource(MAX_ENERGY, MAX_ENERGY);
     }
 
     public boolean dead() {
-        return health <= 0;
+        return health.empty();
     }
 
     public void kill() {
@@ -94,10 +93,10 @@ public class Cell implements Spatial {
         collisions.forEach(cell -> PointMass.spring(this.nucleus, cell.nucleus, this.getRadius() + cell.getRadius(), SPRING_CONSTANT));
         attachments.forEach(cell -> PointMass.spring(this.nucleus, cell.nucleus, (this.getRadius() + cell.getRadius()) * 0.9f , SPRING_CONSTANT));
 
-        useEnergy(SURVIVAL_COST);
-        if (movement.moving()) useEnergy(MOVEMENT_COST);
+        energy.sub(SURVIVAL_COST);
+        if (movement.moving()) energy.sub(MOVEMENT_COST);
 
-        if (energy == 0) damage(STARVATION_DAMAGE);
+        if (energy.empty()) health.sub(STARVATION_DAMAGE);
     }
 
     @Override
@@ -121,16 +120,12 @@ public class Cell implements Spatial {
         this.group = group;
     }
 
-    public void useEnergy(float cost) {
-        energy = max(energy - cost, 0);
-    }
-
-    public float getEnergy() {
+    public Resource energy() {
         return energy;
     }
 
-    public void addEnergy(float extra) {
-        energy = min(energy + extra, MAX_ENERGY);
+    public Resource health() {
+        return health;
     }
 
     public PointMass getNucleus() {
@@ -148,11 +143,6 @@ public class Cell implements Spatial {
     public void stop() {
         target.set(getPosition());
     }
-
-    public void damage(float damage) {
-        health = health < damage ? 0 : health - damage;
-    }
-
 
     public void force(PVector force) {
         nucleus.force(force);
@@ -174,7 +164,7 @@ public class Cell implements Spatial {
         g.noStroke();
 
         PVector a = membrane.getPosition();
-        float x = health / MAX_HEALTH;
+        float x = health.stored() / MAX_HEALTH;
         float rd = g.red(commander.getColour()) * x;
         float gr = g.green(commander.getColour()) * x;
         float bl = g.blue(commander.getColour()) * x;
@@ -184,7 +174,7 @@ public class Cell implements Spatial {
         g.square(a.x, a.y, MEMBRANE_RADIUS);
 
         PVector b = nucleus.getPosition();
-        g.fill(255 * getEnergy() / MAX_ENERGY);
+        g.fill(255 * energy.stored() / MAX_ENERGY);
         g.square(b.x, b.y, NUCLEUS_RADIUS);
     }
 

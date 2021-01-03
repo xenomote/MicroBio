@@ -31,7 +31,7 @@ public class EnergySource implements Spatial {
     }
 
     void update() {
-        collisions.forEach(cell -> cell.addEnergy(rate));
+        collisions.forEach(cell -> cell.energy().add(rate));
     }
 
     void draw(PGraphics g) {

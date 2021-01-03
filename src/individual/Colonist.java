@@ -1,12 +1,14 @@
 package individual;
 
 import cell.Cell;
+import cell.Resource;
 import group.Colony;
 import processing.core.PVector;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static processing.core.PApplet.min;
 import static processing.core.PVector.dist;
 
 public class Colonist extends Individual {
@@ -54,17 +56,18 @@ public class Colonist extends Individual {
     }
 
     private void transfer() {
-        List<Cell> recipients = new ArrayList<>();
+        Resource source = cell.energy();
+        List<Resource> recipients = new ArrayList<>();
         for (Cell other : cell.getAttachments()) {
-            if (other.getEnergy() < cell.getEnergy()) {
-                recipients.add(other);
+            if (other.energy().stored() < source.stored()) {
+                recipients.add(other.energy());
             }
         }
 
-        float rate = ENERGY_TRANSFER_RATE / recipients.size();
-        for (Cell other : recipients) {
-            cell.useEnergy(rate);
-            other.addEnergy(rate);
+        float rate = min(source.stored(), ENERGY_TRANSFER_RATE) / recipients.size();
+        for (Resource other : recipients) {
+            source.sub(rate);
+            source.add(other.add(rate)); // return excess to the source
         }
     }
 
