@@ -34,8 +34,8 @@ public class Cell implements Spatial {
 
     // TODO: 30/12/2020 refactor radius into the Area class
     private final float radius;
-    private Resource health;
-    private Resource energy;
+    private final Resource health;
+    private final Resource energy;
 
     private final Commander commander;
 
