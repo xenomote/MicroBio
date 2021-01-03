@@ -94,9 +94,16 @@ public class Cell implements Spatial {
         attachments.forEach(cell -> PointMass.spring(this.nucleus, cell.nucleus, (this.getRadius() + cell.getRadius()) * 0.9f , SPRING_CONSTANT));
 
         energy.sub(SURVIVAL_COST);
-        if (movement.moving()) energy.sub(MOVEMENT_COST);
 
-        if (energy.empty()) health.sub(STARVATION_DAMAGE);
+        if (energy.empty()) {
+            movement.setForce(0);
+            health.sub(STARVATION_DAMAGE);
+        }
+
+        else if (movement.moving()) {
+            movement.setForce(CELL_SPEED);
+            energy.sub(MOVEMENT_COST);
+        }
     }
 
     @Override

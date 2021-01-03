@@ -8,7 +8,7 @@ public class Movement {
     private final PVector target;
     private final PVector position;
     private final PointMass pointMass;
-    private final float force;
+    private float force;
 
     public Movement(PVector target, PointMass pointMass, float force) {
         this.target = target;
@@ -24,6 +24,10 @@ public class Movement {
     }
 
     public boolean moving() {
-        return dist(target, position) > force;
+        return dist(target, position) > force && force > 0;
+    }
+
+    public void setForce(float force) {
+        this.force = force;
     }
 }
