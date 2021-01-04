@@ -10,6 +10,7 @@ import static game.Colours.*;
 import static processing.core.PApplet.str;
 import static processing.core.PConstants.CORNERS;
 import static processing.core.PConstants.RADIUS;
+import static processing.core.PVector.dist;
 
 public class QuadSpaceRegion<T extends Spatial> extends QuadSpace<T> {
     private final ArrayList<T> items;
@@ -53,7 +54,8 @@ public class QuadSpaceRegion<T extends Spatial> extends QuadSpace<T> {
 
     @Override
     public ArrayList<T> get(PVector position, float radius) {
-        return get_items();
+        return items.stream().filter(item -> dist(position, item.getPosition()) < radius)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Override

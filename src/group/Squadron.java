@@ -37,6 +37,7 @@ public class Squadron extends Group {
     public void update() {
         super.update();
 
+        // TODO: 04/01/2021 drift based on average group position
         PVector drift = new PVector();
 
         getTargets().clear();
@@ -53,6 +54,8 @@ public class Squadron extends Group {
 
         if (targets.isEmpty()) idle++;
         else idle = 0;
+
+        // TODO: 04/01/2021 randomise position after exceeding idle limit
     }
 
     public boolean idle() {

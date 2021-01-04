@@ -4,6 +4,8 @@ import processing.core.PVector;
 
 import java.util.ArrayList;
 
+import static processing.core.PVector.dist;
+
 public abstract class QuadSpace<T extends Spatial> implements Space<T> {
     static final int ITEMS_PER_REGION = 10;
 
@@ -31,15 +33,28 @@ public abstract class QuadSpace<T extends Spatial> implements Space<T> {
         QUAD_INSTANCE++;
     }
 
-    boolean contains(PVector point, float range) {
+    boolean containsPoint(PVector point) {
+        return containsCircle(point, 0);
+    }
+
+    boolean containsCircle(PVector point, float range) {
         return min.x <= point.x - range
                 && max.x > point.x + range
                 && min.y <= point.y - range
                 && max.y > point.y + range;
     }
 
-    boolean intersects(PVector p, float r) {
-        return min.x < p.x + r && min.y < p.y + r && p.x - r < max.x && p.y - r < max.y;
+    boolean intersectsCircle(PVector p, float r) {
+        return containsPoint(p)
+                || between(p.x, min.x, max.x) && between(p.y, min.y - r, max.y + r)
+                || between(p.y, min.y, max.y) && between(p.x, min.x - r, max.x + r)
+                || dist(p, min) < r || dist(p, max) < r
+                || dist(p, new PVector(min.x, max.y)) < r
+                || dist(p, new PVector(max.x, min.y)) < r;
+    }
+
+    boolean between(float v, float min, float max) {
+        return min < v && v < max;
     }
 
     boolean intersects(PVector min, PVector max) {
@@ -50,7 +65,7 @@ public abstract class QuadSpace<T extends Spatial> implements Space<T> {
     }
 
     boolean out_of_bounds(T item) {
-        if (!contains(item.getPosition(), 0)) {
+        if (!containsCircle(item.getPosition(), 0)) {
             System.out.println(
                     "item out of bounds\n" +
                     item.getPosition() + "\n" +

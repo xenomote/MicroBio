@@ -14,7 +14,7 @@ import static processing.core.PVector.dist;
 
 public class Combat extends Individual {
 
-    public static final float DETECTION_RANGE = 100;
+    public static final float DETECTION_RANGE = 1000;
     public static final float ATTACK_RANGE = 40;
     public static final float ATTACK_COST = 10;
     public static final float ATTACK_DAMAGE = 10;
@@ -47,10 +47,13 @@ public class Combat extends Individual {
                 return Float.compare(x, y);
             });
 
-            source.filter(s -> dist(cell.getPosition(), s.getPosition()) > s.getRadius());
+            if (source.isPresent()) {
+                cell.seek(source.get().getPosition());
+            }
 
-            if (source.isPresent()) cell.seek(source.get().getPosition());
-            else cell.stop();
+            else {
+                cell.stop();
+            }
 
             recharging = !cell.energy().full();
         }

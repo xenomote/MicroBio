@@ -149,6 +149,7 @@ public class Game extends PApplet {
             areas.add(source.getCollider());
 
             sources.add(source);
+            source_map.place(source);
         }
 
         commanders.add(player = new PlayerCommander(cell_map, source_map, randomColor(), mouse, keyboard));

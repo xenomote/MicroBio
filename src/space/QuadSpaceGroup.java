@@ -130,10 +130,10 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
     public ArrayList<T> get(PVector point, float range) {
         ArrayList<T> intersecting = new ArrayList<>(itemCount());
 
-        if (TL.intersects(point, range)) intersecting.addAll(TL.get(point, range));
-        if (TR.intersects(point, range)) intersecting.addAll(TR.get(point, range));
-        if (BL.intersects(point, range)) intersecting.addAll(BL.get(point, range));
-        if (BR.intersects(point, range)) intersecting.addAll(BR.get(point, range));
+        if (TL.intersectsCircle(point, range)) intersecting.addAll(TL.get(point, range));
+        if (TR.intersectsCircle(point, range)) intersecting.addAll(TR.get(point, range));
+        if (BL.intersectsCircle(point, range)) intersecting.addAll(BL.get(point, range));
+        if (BR.intersectsCircle(point, range)) intersecting.addAll(BR.get(point, range));
 
         return intersecting;
     }
