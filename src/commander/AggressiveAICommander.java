@@ -7,6 +7,8 @@ import group.Squadron;
 import processing.core.PVector;
 import space.Space;
 
+import static game.Game.MAP_RADIUS;
+
 public class AggressiveAICommander extends Commander {
     private final int minimum;
     private final float aggression;
@@ -23,7 +25,7 @@ public class AggressiveAICommander extends Commander {
 
         for (Squadron squadron : getSquadrons())
             if (squadron.idle())
-                squadron.rally.add(PVector.random2D());
+                squadron.rally.set(PVector.random2D().mult((float) (Math.random() * MAP_RADIUS)));
 
         for (Colony colony : getColonies()) {
             int spare = (int) ((colony.size() - minimum) * aggression);
