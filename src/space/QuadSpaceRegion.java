@@ -44,18 +44,31 @@ public class QuadSpaceRegion<T extends Spatial> extends QuadSpace<T> {
 
     @Override
     public ArrayList<T> get(PVector min, PVector max) {
-        return items.stream().filter(item -> {
+        ArrayList<T> intersecting = new ArrayList<>(itemCount());
+
+        for (T item : items) {
             float x = item.getPosition().x;
             float y = item.getPosition().y;
 
-            return x > min.x && x < max.x && y > min.y && y < max.y;
-        }).collect(Collectors.toCollection(ArrayList::new));
+            if (x > min.x && x < max.x && y > min.y && y < max.y) {
+                intersecting.add(item);
+            }
+        }
+
+        return intersecting;
     }
 
     @Override
     public ArrayList<T> get(PVector position, float radius) {
-        return items.stream().filter(item -> dist(position, item.getPosition()) < radius)
-                .collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<T> intersecting = new ArrayList<>(itemCount());
+
+        for (T item : items) {
+            if (dist(position, item.getPosition()) < radius) {
+                intersecting.add(item);
+            }
+        }
+
+        return intersecting;
     }
 
     @Override
@@ -72,6 +85,7 @@ public class QuadSpaceRegion<T extends Spatial> extends QuadSpace<T> {
         g.stroke(255);
         g.strokeWeight(10);
 
+        // TODO: 08/01/2021 rect is expensive, use lines
         g.rectMode(CORNERS);
         g.rect(min.x, min.y, max.x, max.y);
         g.rectMode(RADIUS);

@@ -79,15 +79,27 @@ public class Combat extends Individual {
     private Optional<Cell> closestTarget() {
         List<Cell> cells = squadron.getCommander().cellMap().get(cell.getPosition(), DETECTION_RANGE);
 
-        return cells.stream()
-                .filter(target -> target.getCommander() != cell.getCommander())
-                .filter(this::inRallyRange)
-                .min((a, b) -> {
-                    float x = dist(cell.getPosition(), a.getPosition());
-                    float y = dist(cell.getPosition(), b.getPosition());
+        Optional<Cell> closest = Optional.empty();
+        float min_dist = Float.POSITIVE_INFINITY;
 
-                    return Float.compare(x, y);
-                });
+        for (Cell target : cells) {
+            if (target.getCommander() == cell.getCommander()) {
+                continue;
+            }
+
+            if (!inRallyRange(target)) {
+                continue;
+            }
+
+            float dist = dist(cell.getPosition(), target.getPosition());
+            if (dist < min_dist) {
+                closest = Optional.of(target);
+                min_dist = dist;
+            }
+
+        }
+
+        return closest;
     }
 
     private boolean inRallyRange(Cell cell) {
