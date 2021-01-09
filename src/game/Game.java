@@ -72,7 +72,7 @@ public class Game extends PApplet {
 
     @Override
     public void settings() {
-        size(1000, 500, P2D);
+        size(1000, 500);
         //smooth(8);
     }
 

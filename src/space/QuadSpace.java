@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import static processing.core.PVector.dist;
 
 public abstract class QuadSpace<T extends Spatial> implements Space<T> {
-    static final int ITEMS_PER_REGION = 10;
+    static final int ITEMS_PER_REGION = 5;
 
     public static int QUAD_INSTANCE;
 

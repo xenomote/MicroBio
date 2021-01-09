@@ -149,6 +149,14 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
         BL.draw(g);
         BR.draw(g);
 
+        g.push();
+        g.stroke(255);
+        g.strokeWeight(1);
+
+        g.line(mid.x, min.y, mid.x, max.y);
+        g.line(min.x, mid.y, max.x, mid.y);
+
         g.text(itemCount, mid.x, mid.y);
+        g.pop();
     }
 }

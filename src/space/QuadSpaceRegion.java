@@ -77,18 +77,18 @@ public class QuadSpaceRegion<T extends Spatial> extends QuadSpace<T> {
     }
 
     public void draw(PGraphics g){
-        if (fresh) g.fill(RED);
-        else g.noFill();
+        if (fresh) {
+            g.push();
+            g.fill(RED);
+            g.stroke(255);
+            g.strokeWeight(10);
+            g.rectMode(CORNERS);
+            g.rect(min.x, min.y, max.x, max.y);
+            g.pop();
+        }
 
+        // TODO: 09/01/2021 clear fresh flag outside of draw
         fresh = false;
-
-        g.stroke(255);
-        g.strokeWeight(10);
-
-        // TODO: 08/01/2021 rect is expensive, use lines
-        g.rectMode(CORNERS);
-        g.rect(min.x, min.y, max.x, max.y);
-        g.rectMode(RADIUS);
 
         g.fill(WHITE);
         g.textSize(50);
