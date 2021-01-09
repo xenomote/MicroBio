@@ -40,18 +40,21 @@ public class Combat extends Individual {
         if (cell.energy().stored() < MAX_ENERGY/2 || recharging) {
             List<EnergySource> sources = squadron.getCommander().sourceMap().get(cell.getPosition(), DETECTION_RANGE);
 
-            Optional<EnergySource> source = sources.stream().min((a, b) -> {
-                float x = dist(cell.getPosition(), a.getPosition());
-                float y = dist(cell.getPosition(), b.getPosition());
+            Optional<EnergySource> closest = Optional.empty();
+            float min_dist = Float.POSITIVE_INFINITY;
 
-                return Float.compare(x, y);
-            });
+            for (EnergySource energySource : sources) {
+                float dist = dist(energySource.getPosition(), cell.getPosition()) - energySource.getRadius();
 
-            if (source.isPresent()) {
-                cell.seek(source.get().getPosition());
+                if (dist < min_dist) {
+                    closest = Optional.of(energySource);
+                    min_dist = dist;
+                }
             }
 
-            else {
+            if (closest.isPresent()) {
+                cell.seek(closest.get().getPosition());
+            } else {
                 cell.stop();
             }
 
