@@ -10,6 +10,7 @@ import processing.core.PVector;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cell.Cell.CELL_SPEED;
 import static game.Colours.*;
 import static processing.core.PVector.dist;
 
@@ -49,7 +50,7 @@ public class Squadron extends Group {
             }
         }
 
-        drift.div(getTargets().size() * 2);
+        drift.normalize();
         rally.add(drift);
 
         if (targets.isEmpty()) idle++;

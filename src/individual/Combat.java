@@ -71,14 +71,15 @@ public class Combat extends Individual {
             if (target.isPresent()) {
                 Cell victim = target.get();
                 cell.seek(victim.getPosition());
-                if (inAttackRange(victim) && canAttack()) attack(victim);
+                if (inAttackRange(victim) && canAttack()) {
+                    attack(victim);
+                }
             }
 
             else cell.stop();
         }
     }
 
-    // TODO: 29/12/2020 fix seeking towards targets
     private Optional<Cell> closestTarget() {
         List<Cell> cells = squadron.getCommander().cellMap().get(cell.getPosition(), DETECTION_RANGE);
 

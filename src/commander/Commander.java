@@ -49,6 +49,7 @@ public abstract class Commander {
                 });
 
         squadron.attach(cells);
+        squadron.rally.set(position);
     }
 
     public void place_colony(List<Cell> cells, PVector position) {
@@ -62,6 +63,7 @@ public abstract class Commander {
                 });
 
         colony.attach(cells);
+        colony.center.set(position);
     }
 
     public List<Cell> cells() {
