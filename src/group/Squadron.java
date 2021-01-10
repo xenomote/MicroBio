@@ -49,7 +49,7 @@ public class Squadron extends Group {
             }
         }
 
-        drift.normalize();
+        drift.div(getTargets().size() * 2);
         rally.add(drift);
 
         if (targets.isEmpty()) idle++;
