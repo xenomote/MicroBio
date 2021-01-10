@@ -30,7 +30,6 @@ public class PointMass {
         force_total.add(force);
     }
 
-
     public void update() {
         acceleration.set(force_total).div(mass);
         velocity.mult(damping).add(acceleration);

@@ -17,7 +17,7 @@ public class Combat extends Individual {
     public static final float DETECTION_RANGE = 1000;
     public static final float ATTACK_RANGE = 40;
     public static final float ATTACK_COST = 10;
-    public static final float ATTACK_DAMAGE = 10;
+    public static final float ATTACK_DAMAGE = 25;
 
     public static final int ATTACK_SPEED = 100;
 
