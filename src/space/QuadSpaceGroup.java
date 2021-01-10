@@ -1,5 +1,6 @@
 package space;
 
+import game.Counter;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
@@ -13,19 +14,19 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
 
     private int itemCount;
 
-    public QuadSpaceGroup(PVector mid, float size) {
-        super(mid, size);
+    public QuadSpaceGroup(PVector mid, float size, Counter instances) {
+        super(mid, size, instances);
 
-        TL = new QuadSpaceRegion<>(min, mid);
-        TR = new QuadSpaceRegion<>(new PVector(mid.x, min.y), new PVector(max.x, mid.y));
-        BL = new QuadSpaceRegion<>(new PVector(min.x, mid.y), new PVector(mid.x, max.y));
-        BR = new QuadSpaceRegion<>(mid, max);
+        TL = new QuadSpaceRegion<>(min, mid, instances);
+        TR = new QuadSpaceRegion<>(new PVector(mid.x, min.y), new PVector(max.x, mid.y), instances);
+        BL = new QuadSpaceRegion<>(new PVector(min.x, mid.y), new PVector(mid.x, max.y), instances);
+        BR = new QuadSpaceRegion<>(mid, max, instances);
 
         itemCount = 0;
     }
 
     QuadSpaceGroup(QuadSpace<T> region) {
-        this(region.mid, region.max.x - region.mid.x);
+        this(region.mid, region.max.x - region.mid.x, region.instances);
 
         region.get_items().forEach(this::place);
     }
@@ -97,6 +98,10 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
     private QuadSpace<T> remove(QuadSpace<T> space, T item) {
         if (space.itemCount() == 1 && space instanceof QuadSpaceGroup) {
             space = new QuadSpaceRegion<>(space);
+
+            for (int i = 0; i < 4; i++) {
+                instances.dec();
+            }
         }
 
         space.remove(item);

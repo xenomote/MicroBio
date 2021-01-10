@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static cell.Cell.MEMBRANE_RADIUS;
-import static space.QuadSpace.QUAD_INSTANCE;
 import static game.Colours.*;
 
 public class Game extends PApplet {
@@ -24,8 +23,8 @@ public class Game extends PApplet {
     public static final int OPPOSITION_AIS = 30;
     public static final int ENERGY_SOURCES = 20;
 
-    SoundFile[] splat;
-    SoundFile music;
+    private SoundFile[] splat;
+    private SoundFile music;
 
     private Mouse mouse;
     private Keyboard keyboard;
@@ -37,13 +36,12 @@ public class Game extends PApplet {
 
     private boolean ended;
 
-    int max_cells;
-    int min_cells;
+    private Counter cellCount;
+    private Counter cellQuadCount;
+    private Counter sourceQuadCount;
 
-    PVector center;
-
-    PlayerCommander player;
-    List<Commander> commanders;
+    private PlayerCommander player;
+    private List<Commander> commanders;
 
     private List<Attack> attacks;
     private List<PointMass> physics;
@@ -112,8 +110,6 @@ public class Game extends PApplet {
         movement = new ArrayList<>();
         areas = new ArrayList<>();
 
-        center = new PVector();
-
         PVector position = new PVector();
 
         camera = new Camera(position);
@@ -138,8 +134,11 @@ public class Game extends PApplet {
         commanders = new ArrayList<>();
         sources = new ArrayList<>();
 
-        cell_map = new QuadSpaceGroup<>(new PVector(0, 0), MAP_RADIUS);
-        source_map = new QuadSpaceGroup<>(new PVector(0, 0), MAP_RADIUS);
+        cellQuadCount = new Counter(4);
+        sourceQuadCount = new Counter(4);
+
+        cell_map = new QuadSpaceGroup<>(new PVector(0, 0), MAP_RADIUS, cellQuadCount);
+        source_map = new QuadSpaceGroup<>(new PVector(0, 0), MAP_RADIUS, sourceQuadCount);
 
         for (int i = 0; i < ENERGY_SOURCES; i++) {
             float radius = random(MEMBRANE_RADIUS, MAP_RADIUS/10);
@@ -171,8 +170,7 @@ public class Game extends PApplet {
 
         camera.getPosition().set(player.getColonies().get(0).center);
 
-        max_cells = cells.size();
-        min_cells = cells.size();
+        cellCount = new Counter(cells.size());
     }
 
     //##################################################################################################################
@@ -255,13 +253,18 @@ public class Game extends PApplet {
             if (cell.dead()) {
                 cell.kill();
                 deregister(cell);
+                cellCount.dec();
             }
         }
 
-        commanders.forEach(commander -> {
-            commander.getSpawned().forEach(this::register);
+        for (Commander commander : commanders) {
+            for (Cell cell : commander.getSpawned()) {
+                register(cell);
+                cellCount.inc();
+            }
+
             commander.getSpawned().clear();
-        });
+        }
     }
 
     private int randomColor() {
@@ -273,7 +276,7 @@ public class Game extends PApplet {
     }
 
     void drawCameraView() {
-        pushMatrix();
+        push();
 
         camera.transform(g);
 
@@ -297,7 +300,7 @@ public class Game extends PApplet {
 
         player.drawSelection(g);
 
-        popMatrix();
+        pop();
     }
 
     void drawMap() {
@@ -311,23 +314,21 @@ public class Game extends PApplet {
         stroke(0,0);
 
         rectMode(CORNER);
-        for (Cell cell : cells) rect(cell.getPosition().x - 2, cell.getPosition().y, 4, -cell.energy().stored());
+        for (Cell cell : cells) {
+            rect(cell.getPosition().x - 2, cell.getPosition().y, 4, -cell.energy().stored());
+        }
         rectMode(RADIUS);
     }
 
     void printStatistics() {
-        max_cells = max(max_cells, cells.size());
-        min_cells = min(min_cells, cells.size());
-
         fill(WHITE);
         textAlign(LEFT, TOP);
         textSize(18);
         text(
-                "min: " + min_cells + "\n" +
-                "max: " + max_cells + "\n" +
-                "current: " + cells.size() + "\n" +
-                "quadrants: " + QUAD_INSTANCE + "\n" +
-                "fps: " + (frameRate < 25 ? "slowed " : "") + frameRate + ")",
+                "cells:\n" + cellCount + "\n" +
+                "cell quadrants:\n " + cellQuadCount + "\n" +
+                "source quadrants:\n " + sourceQuadCount + "\n" +
+                "fps: " + (frameRate < 25 ? "slowed " : "") + frameRate,
 
                 0, 0
         );

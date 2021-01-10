@@ -10,8 +10,6 @@ import space.Spatial;
 import java.util.ArrayList;
 import java.util.List;
 
-import static processing.core.PApplet.max;
-import static processing.core.PApplet.min;
 import static game.Colours.*;
 
 public class Cell implements Spatial {

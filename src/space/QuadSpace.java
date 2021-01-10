@@ -1,5 +1,6 @@
 package space;
 
+import game.Counter;
 import processing.core.PVector;
 
 import java.util.ArrayList;
@@ -9,28 +10,29 @@ import static processing.core.PVector.dist;
 public abstract class QuadSpace<T extends Spatial> implements Space<T> {
     static final int ITEMS_PER_REGION = 5;
 
-    public static int QUAD_INSTANCE;
-
     final PVector min;
     final PVector max;
     final PVector mid;
+    final Counter instances;
 
     boolean fresh = true;
 
-    QuadSpace(PVector min, PVector max) {
+    QuadSpace(PVector min, PVector max, Counter instances) {
         this.min = min;
         this.max = max;
         this.mid = PVector.add(min, max).div(2);
 
-        QUAD_INSTANCE++;
+        this.instances = instances;
+        instances.inc();
     }
 
-    QuadSpace(PVector mid, float size) {
+    QuadSpace(PVector mid, float size, Counter instances) {
         this.mid = mid;
         this.min = new PVector(mid.x - size, mid.y - size);
         this.max = new PVector(mid.x + size, mid.y + size);
 
-        QUAD_INSTANCE++;
+        this.instances = instances;
+        instances.inc();
     }
 
     boolean containsPoint(PVector point) {

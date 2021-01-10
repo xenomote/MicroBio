@@ -1,5 +1,6 @@
 package space;
 
+import game.Counter;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
@@ -9,19 +10,18 @@ import java.util.stream.Collectors;
 import static game.Colours.*;
 import static processing.core.PApplet.str;
 import static processing.core.PConstants.CORNERS;
-import static processing.core.PConstants.RADIUS;
 import static processing.core.PVector.dist;
 
 public class QuadSpaceRegion<T extends Spatial> extends QuadSpace<T> {
     private final ArrayList<T> items;
 
-    QuadSpaceRegion(PVector min, PVector max) {
-        super(min, max);
+    QuadSpaceRegion(PVector min, PVector max, Counter instances) {
+        super(min, max, instances);
         this.items = new ArrayList<>(ITEMS_PER_REGION);
     }
 
     QuadSpaceRegion(QuadSpace<T> group) {
-        this(group.min, group.max);
+        this(group.min, group.max, group.instances);
 
         items.addAll(group.get_items());
     }
