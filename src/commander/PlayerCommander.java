@@ -81,10 +81,11 @@ public class PlayerCommander extends Commander {
             PVector x = new PVector(min(a.x, b.x), min(a.y, b.y));
             PVector y = new PVector(max(a.x, b.x), max(a.y, b.y));
 
+            g.push();
             g.rectMode(CORNERS);
             g.fill(WHITE, 256/2f);
             g.rect(x.x, x.y, y.x, y.y);
-            g.rectMode(RADIUS);
+            g.pop();
         }
     }
 

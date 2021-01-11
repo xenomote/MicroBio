@@ -85,6 +85,7 @@ public class Cell implements Spatial {
         this.group.detach(this);
     }
 
+    // TODO: 10/01/2021 ensure collisions and neighbours are only updated from one side
     public void update() {
         PointMass.spring(nucleus, membrane, 0, SPRING_CONSTANT);
 

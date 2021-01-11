@@ -195,6 +195,7 @@ public class Game extends PApplet {
         if (keyboard.key('\n').held() == 1) reset();
     }
 
+    // TODO: 10/01/2021 create layer abstraction for drawing
     private void render() {
         background(DARK_GREY);
         drawCameraView();
@@ -295,8 +296,18 @@ public class Game extends PApplet {
         cells.forEach(cell -> cell.draw(g));
         attacks.forEach(attack -> attack.draw(g));
 
-        if (ui.energy()) drawEnergyLevels();
-        if (ui.partition()) cell_map.draw(g);
+        if (ui.energy()) {
+            drawEnergyLevels();
+        }
+
+        if (ui.partition()) {
+            push();
+            noFill();
+            stroke(255);
+            rect(0, 0, MAP_RADIUS, MAP_RADIUS);
+            cell_map.draw(g);
+            pop();
+        }
 
         player.drawSelection(g);
 
@@ -310,14 +321,14 @@ public class Game extends PApplet {
     }
 
     void drawEnergyLevels() {
+        push();
         fill(WHITE);
         stroke(0,0);
 
-        rectMode(CORNER);
         for (Cell cell : cells) {
             rect(cell.getPosition().x - 2, cell.getPosition().y, 4, -cell.energy().stored());
         }
-        rectMode(RADIUS);
+        pop();
     }
 
     void printStatistics() {
