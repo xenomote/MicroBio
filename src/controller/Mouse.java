@@ -1,6 +1,5 @@
 package controller;
 
-import controller.Camera.ScreenTranslation;
 import processing.core.PVector;
 import processing.event.MouseEvent;
 
@@ -30,7 +29,7 @@ public class Mouse {
         this.position = new PVector();
         this.delta = new PVector();
 
-        this.mapping = camera.translate(coordinates);
+        this.mapping = new ScreenTranslation(camera, coordinates);
     }
 
     public void update() {

@@ -25,10 +25,6 @@ public class Camera {
         size.set(g.width, g.height);
     }
 
-    public ScreenTranslation translate(PVector position) {
-        return new ScreenTranslation(position);
-    }
-
     public void zoom(float zoom) {
         this.zoom = zoom;
     }
@@ -41,17 +37,7 @@ public class Camera {
         return position;
     }
 
-    // TODO: 30/12/2020 refactor into separate class
-    public class ScreenTranslation {
-        private final PVector position;
-
-        private ScreenTranslation(PVector position) {
-            this.position = position;
-        }
-
-        public void set(PVector position) {
-            PVector camera = Camera.this.position;
-            this.position.set((position.x - size.x/2) / zoom + camera.x, (position.y - size.y/2) / zoom + camera.y);
-        }
+    public PVector getSize() {
+        return size;
     }
 }
