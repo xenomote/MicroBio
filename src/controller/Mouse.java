@@ -39,8 +39,9 @@ public class Mouse {
 
         mapping.set(position);
 
-        if (fresh) fresh = false;
-        else {
+        if (fresh) {
+            fresh = false;
+        } else {
             delta.set(0, 0);
             scroll = 0;
         }

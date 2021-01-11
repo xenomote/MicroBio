@@ -6,7 +6,6 @@ import processing.core.PVector;
 import java.util.ArrayList;
 
 public interface Space<T extends Spatial> {
-
     void place(T item);
     void remove(T item);
 

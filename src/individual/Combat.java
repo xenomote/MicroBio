@@ -13,7 +13,6 @@ import static cell.Cell.MAX_ENERGY;
 import static processing.core.PVector.dist;
 
 public class Combat extends Individual {
-
     public static final float DETECTION_RANGE = 1000;
     public static final float ATTACK_RANGE = 40;
     public static final float ATTACK_COST = 10;
@@ -23,7 +22,6 @@ public class Combat extends Individual {
 
     private int attackCooldown;
     private boolean recharging;
-
 
     private final Squadron squadron;
 
@@ -35,7 +33,9 @@ public class Combat extends Individual {
 
     // TODO: 29/12/2020 prevent repeated adding of attacker for instant damage
     public void update() {
-        if (attackCooldown > 0) attackCooldown--;
+        if (attackCooldown > 0) {
+            attackCooldown--;
+        }
 
         if (cell.energy().stored() < MAX_ENERGY/2 || recharging) {
             List<EnergySource> sources = squadron.getCommander().sourceMap().get(cell.getPosition(), DETECTION_RANGE);
@@ -59,13 +59,9 @@ public class Combat extends Individual {
             }
 
             recharging = !cell.energy().full();
-        }
-
-        else if (!inRallyRange(cell)) {
+        } else if (!inRallyRange(cell)) {
             cell.seek(squadron.rally);
-        }
-
-        else {
+        } else {
             Optional<Cell> target = closestTarget();
 
             if (target.isPresent()) {
@@ -74,9 +70,9 @@ public class Combat extends Individual {
                 if (inAttackRange(victim) && canAttack()) {
                     attack(victim);
                 }
+            } else {
+                cell.stop();
             }
-
-            else cell.stop();
         }
     }
 

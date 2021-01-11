@@ -5,12 +5,10 @@ import processing.core.PVector;
 
 public class Camera {
     private final PVector position;
+    private final PVector size;
     private float zoom;
 
-    private final PVector size;
-
     public Camera(PVector position) {
-
         this.position = position;
         this.zoom = 1;
 
@@ -33,11 +31,11 @@ public class Camera {
         return zoom;
     }
 
-    public PVector getPosition() {
-        return position;
-    }
-
     public PVector getSize() {
         return size;
+    }
+
+    public PVector getPosition() {
+        return position;
     }
 }

@@ -51,19 +51,23 @@ public class PlayerCommander extends Commander {
             selection.clear();
             selection.addAll(cellMap().get(min, max));
             selection.retainAll(cells());
-        }
-
-        else if (keyboard.key(' ').held() == 1) {
-            if (selection.isEmpty()) selection.addAll(cells());
-            else selection.clear();
+        } else if (keyboard.key(' ').held() == 1) {
+            if (selection.isEmpty()) {
+                selection.addAll(cells());
+            } else {
+                selection.clear();
+            }
         }
 
         selection.removeIf(Cell::dead);
 
         // TODO: 29/12/2020 move existing group if it is it is selected
         if (!selection.isEmpty()) {
-            if (keyboard.key('c').pressed()) place_colony(selection, mouse.coordinates());
-            else if (keyboard.key('x').pressed()) place_squadron(selection, mouse.coordinates());
+            if (keyboard.key('c').pressed()) {
+                place_colony(selection, mouse.coordinates());
+            } else if (keyboard.key('x').pressed()) {
+                place_squadron(selection, mouse.coordinates());
+            }
         }
     }
 
@@ -90,7 +94,8 @@ public class PlayerCommander extends Commander {
     }
 
     public void highlightSelection(PGraphics g) {
-        for (Cell cell : selection)
+        for (Cell cell : selection) {
             cell.highlight(g);
+        }
     }
 }

@@ -39,7 +39,9 @@ public class UIControl {
     public void update() {
         toggles.forEach(Toggle::update);
 
-        if (!messages.empty() && SPACE.held() == 1) messages.pop();
+        if (!messages.empty() && SPACE.held() == 1) {
+            messages.pop();
+        }
     }
 
 

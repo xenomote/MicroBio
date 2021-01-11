@@ -74,6 +74,7 @@ public abstract class QuadSpace<T extends Spatial> implements Space<T> {
                     min + "\n" +
                     max
             );
+
             return true;
         }
 

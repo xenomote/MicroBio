@@ -7,7 +7,10 @@ public class Button {
 
     // TODO: 30/12/2020 use event based updating and time counting instead of tick counting
     public void update() {
-        if (pressed) held++;
+        if (pressed) {
+            held++;
+        }
+
         if (released) {
             held = 0;
             released = false;

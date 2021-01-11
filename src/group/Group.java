@@ -39,8 +39,11 @@ public abstract class Group {
         List<Cell> taken = new ArrayList<>();
 
         for (Cell cell : cells()) {
-            if (taken.size() < n) taken.add(cell);
-            else break;
+            if (taken.size() < n) {
+                taken.add(cell);
+            } else {
+                break;
+            }
         }
 
         detach(taken);
@@ -68,7 +71,6 @@ public abstract class Group {
         cells().forEach(cell -> cell.highlight(g));
     }
 
-    abstract Individual member(Cell cell);
 
     public void update() {
         members.values().forEach(Individual::update);
@@ -85,6 +87,8 @@ public abstract class Group {
 
         additions.clear();
     }
+
+    abstract Individual member(Cell cell);
 
     public abstract void draw(PGraphics g);
 }

@@ -10,7 +10,9 @@ public class Toggle {
     }
 
     public void update() {
-        if (button.held() == 1) toggle = !toggle;
+        if (button.held() == 1) {
+            toggle = !toggle;
+        }
     }
 
     public boolean pressed() {

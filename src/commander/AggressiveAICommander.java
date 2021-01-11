@@ -23,14 +23,18 @@ public class AggressiveAICommander extends Commander {
     public void update() {
         super.update();
 
-        for (Squadron squadron : getSquadrons())
-            if (squadron.idle())
+        for (Squadron squadron : getSquadrons()) {
+            if (squadron.idle()) {
                 squadron.rally.set(PVector.random2D().mult((float) (Math.random() * MAP_RADIUS)));
+            }
+        }
 
         for (Colony colony : getColonies()) {
             int spare = (int) ((colony.size() - minimum) * aggression);
 
-            if (spare > 0) place_squadron(colony.take(spare), colony.center.copy());
+            if (spare > 0) {
+                place_squadron(colony.take(spare), colony.center.copy());
+            }
         }
     }
 }

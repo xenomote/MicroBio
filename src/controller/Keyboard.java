@@ -26,9 +26,11 @@ public class Keyboard {
                 ? code(event.getKeyCode())
                 : key(event.getKey());
 
-        if (event.getAction() == KeyEvent.RELEASE) button.release();
-        else button.press();
-
+        if (event.getAction() == KeyEvent.RELEASE) {
+            button.release();
+        } else {
+            button.press();
+        }
     }
 
     public Button key(char key) {

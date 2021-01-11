@@ -38,19 +38,13 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
         if (position.x < mid.x) {
             if (position.y < mid.y) {
                 TL = place(TL, item);
-            }
-
-            else {
+            } else {
                 BL = place(BL, item);
             }
-        }
-
-        else {
+        } else {
             if (position.y < mid.y) {
                 TR = place(TR, item);
-            }
-
-            else {
+            } else {
                 BR = place(BR, item);
             }
         }
@@ -59,8 +53,9 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
     }
 
     private QuadSpace<T> place(QuadSpace<T> space, T item) {
-        if (space.itemCount() == ITEMS_PER_REGION && space instanceof QuadSpaceRegion)
+        if (space.itemCount() == ITEMS_PER_REGION && space instanceof QuadSpaceRegion) {
             space = new QuadSpaceGroup<>(space);
+        }
 
         space.place(item);
 
@@ -70,24 +65,20 @@ public class QuadSpaceGroup<T extends Spatial> extends QuadSpace<T> {
     @Override
     public void remove(T item) {
         PVector position = item.getPosition();
-        if (out_of_bounds(item)) return;
+        if (out_of_bounds(item)) {
+            return;
+        }
 
         if (position.x < mid.x) {
             if (position.y < mid.y) {
                 TL = remove(TL, item);
-            }
-
-            else {
+            } else {
                 BL = remove(BL, item);
             }
-        }
-
-        else {
+        } else {
             if (position.y < mid.y) {
                 TR = remove(TR, item);
-            }
-
-            else {
+            } else {
                 BR = remove(BR, item);
             }
         }

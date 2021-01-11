@@ -62,11 +62,9 @@ public class Game extends PApplet {
         return PVector.random2D().mult(random(0, MAP_RADIUS));
     }
 
-
     //##################################################################################################################
     // SETUP METHODS
     //##################################################################################################################
-
 
     @Override
     public void settings() {
@@ -167,7 +165,6 @@ public class Game extends PApplet {
             commander.getColonies().add(colony);
         });
 
-
         camera.getPosition().set(player.getColonies().get(0).center);
 
         cellCount = new Counter(cells.size());
@@ -179,8 +176,9 @@ public class Game extends PApplet {
 
     @Override
     public void draw() {
-
-        if (!ui.paused()) update_step();
+        if (!ui.paused()) {
+            update_step();
+        }
 
         mouse.update();
         keyboard.update();
@@ -192,7 +190,9 @@ public class Game extends PApplet {
 
         render();
 
-        if (keyboard.key('\n').held() == 1) reset();
+        if (keyboard.key('\n').held() == 1) {
+            reset();
+        }
     }
 
     // TODO: 10/01/2021 create layer abstraction for drawing
@@ -286,8 +286,13 @@ public class Game extends PApplet {
         sources.forEach(source -> source.draw(g));
 
         if (ui.groups()) {
-            for (Commander commander : commanders) commander.drawColonies(g);
-            for (Commander commander : commanders) commander.drawSquadrons(g);
+            for (Commander commander : commanders) {
+                commander.drawColonies(g);
+            }
+
+            for (Commander commander : commanders) {
+                commander.drawSquadrons(g);
+            }
         }
 
         player.highlightCells(g);
@@ -328,6 +333,7 @@ public class Game extends PApplet {
         for (Cell cell : cells) {
             rect(cell.getPosition().x - 2, cell.getPosition().y, 4, -cell.energy().stored());
         }
+
         pop();
     }
 
@@ -340,7 +346,6 @@ public class Game extends PApplet {
                 "cell quadrants:\n " + cellQuadCount + "\n" +
                 "source quadrants:\n " + sourceQuadCount + "\n" +
                 "fps: " + (frameRate < 25 ? "slowed " : "") + frameRate,
-
                 0, 0
         );
     }

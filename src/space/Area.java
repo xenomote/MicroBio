@@ -20,7 +20,9 @@ public class Area<T extends Spatial> {
         List<T> items = map.get(item.getPosition(), item.getRadius() * 2);
 
         for (T other : items) {
-            if (colliding(other)) collisions.add(other);
+            if (colliding(other)) {
+                collisions.add(other);
+            }
         }
     }
 

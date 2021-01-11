@@ -27,7 +27,6 @@ public class EnergySource implements Spatial {
 
         this.collisions = new ArrayList<>();
         this.area = new Area<>(this, cells, collisions);
-
     }
 
     void update() {

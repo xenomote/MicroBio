@@ -38,19 +38,38 @@ public class CameraControls extends Controller {
     @Override
     public void update() {
         float zoom = camera.getZoom();
-
         int step = -mouse.scroll();
-        if (keyboard.key('+').held() == 1) step++;
-        if (keyboard.key('-').held() == 1) step--;
+
+        if (keyboard.key('+').held() == 1) {
+            step++;
+        }
+
+        if (keyboard.key('-').held() == 1) {
+            step--;
+        }
+
         camera.zoom(constrain(zoom + step * ZOOM_STEP, MIN_ZOOM, MAX_ZOOM));
 
-        if (mouse.middle().pressed()) pointMass.force(PVector.div(mouse.delta(), zoom));
+        if (mouse.middle().pressed()) {
+            pointMass.force(PVector.div(mouse.delta(), zoom));
+        }
 
         float scale = keyboard.code(SHIFT).pressed() ? zoom / 5 : zoom;
 
-        if (W.stream().anyMatch(Button::pressed)) pointMass.force(new PVector(0, -speed).div(scale));
-        if (A.stream().anyMatch(Button::pressed)) pointMass.force(new PVector(-speed, 0).div(scale));
-        if (S.stream().anyMatch(Button::pressed)) pointMass.force(new PVector(0, speed).div(scale));
-        if (D.stream().anyMatch(Button::pressed)) pointMass.force(new PVector(speed, 0).div(scale));
+        if (W.stream().anyMatch(Button::pressed)) {
+            pointMass.force(new PVector(0, -speed).div(scale));
+        }
+
+        if (A.stream().anyMatch(Button::pressed)) {
+            pointMass.force(new PVector(-speed, 0).div(scale));
+        }
+
+        if (S.stream().anyMatch(Button::pressed)) {
+            pointMass.force(new PVector(0, speed).div(scale));
+        }
+
+        if (D.stream().anyMatch(Button::pressed)) {
+            pointMass.force(new PVector(speed, 0).div(scale));
+        }
     }
 }

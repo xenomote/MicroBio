@@ -19,8 +19,11 @@ public class Movement {
     }
 
     public void update() {
-        if (moving()) pointMass.force(PVector.sub(target, position).setMag(force));
-        else target.set(position);
+        if (moving()) {
+            pointMass.force(PVector.sub(target, position).setMag(force));
+        } else {
+            target.set(position);
+        }
     }
 
     public boolean moving() {

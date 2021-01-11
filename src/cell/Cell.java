@@ -97,9 +97,7 @@ public class Cell implements Spatial {
         if (energy.empty()) {
             movement.setForce(0);
             health.sub(STARVATION_DAMAGE);
-        }
-
-        else if (movement.moving()) {
+        } else if (movement.moving()) {
             movement.setForce(CELL_SPEED);
             energy.sub(MOVEMENT_COST);
         }

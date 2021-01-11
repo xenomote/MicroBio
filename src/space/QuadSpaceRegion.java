@@ -5,7 +5,6 @@ import processing.core.PGraphics;
 import processing.core.PVector;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 import static game.Colours.*;
 import static processing.core.PApplet.str;
@@ -27,13 +26,17 @@ public class QuadSpaceRegion<T extends Spatial> extends QuadSpace<T> {
     }
 
     public void place(T item) {
-        if (out_of_bounds(item)) return;
+        if (out_of_bounds(item)) {
+            return;
+        }
 
         items.add(item);
     }
 
     public void remove(T item) {
-        if (out_of_bounds(item)) return;
+        if (out_of_bounds(item)) {
+            return;
+        }
 
         items.remove(item);
     }
