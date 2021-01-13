@@ -52,6 +52,10 @@ public class Cell implements Spatial {
     private Group group;
 
     public Cell(Commander commander, Group group, PVector position) {
+        this(commander, group, position, MAX_ENERGY);
+    }
+
+    public Cell(Commander commander, Group group, PVector position, float energy) {
         this.commander = commander;
         this.commander.cells().add(this);
 
@@ -73,7 +77,7 @@ public class Cell implements Spatial {
         this.radius = MEMBRANE_RADIUS;
 
         this.health = new Resource(MAX_HEALTH, MAX_HEALTH);
-        this.energy = new Resource(MAX_ENERGY, MAX_ENERGY);
+        this.energy = new Resource(energy, MAX_ENERGY);
     }
 
     public boolean dead() {

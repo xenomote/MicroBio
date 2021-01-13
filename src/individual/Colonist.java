@@ -70,15 +70,28 @@ public class Colonist extends Individual {
         }
     }
 
-    // TODO: 10/01/2021 spawn new cells with energy evenly divided
     private void divide() {
-        cell.getCommander().spawn(new Cell(cell.getCommander(), cell.getGroup(), PVector.random2D().add(cell.getPosition())));
+        float energy = cell.energy().stored() / 2;
+        cell.energy().sub(energy);
+
+        cell.getCommander().spawn(
+                new Cell(
+                        cell.getCommander(),
+                        cell.getGroup(),
+                        PVector.random2D().add(cell.getPosition()),
+                        energy
+                )
+        );
 
         divisionCooldown = randomDivisionCooldown();
     }
 
     private boolean canDivide() {
-        return divisionCooldown == 0 && cell.energy().stored() > DIVISION_MINIMUM;
+        int attachments = cell.getAttachments().size();
+
+        return divisionCooldown == 0
+                && cell.energy().stored() > DIVISION_MINIMUM
+                && 0 < attachments && attachments < 6;
     }
 
     private boolean displaced() {

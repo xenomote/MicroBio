@@ -3,7 +3,6 @@ package commander;
 import cell.Cell;
 import game.EnergySource;
 import group.Colony;
-import group.Group;
 import group.Squadron;
 import processing.core.PGraphics;
 import processing.core.PVector;

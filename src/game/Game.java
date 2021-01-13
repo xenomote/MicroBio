@@ -396,7 +396,6 @@ public class Game extends PApplet {
     // SOUND LOCALISATION
     //##################################################################################################################
 
-
     void play(SoundFile sound, PVector position) {
         float distance = PVector.dist(camera.getPosition(), position);
         float right = camera.getPosition().x - position.x;
