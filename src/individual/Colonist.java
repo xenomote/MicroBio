@@ -14,24 +14,20 @@ import static processing.core.PVector.dist;
 public class Colonist extends Individual {
     public static final float DIVISION_MINIMUM = 50;
     public static final float ENERGY_TRANSFER_RATE = 1f;
-    public static final int MAX_DIVISION_COOLDOWN = 1000;
-    public static final int MIN_DIVISION_COOLDOWN = 500;
+    public static final int MAX_GROWTH_PERIOD = 1000;
+    public static final int MIN_GROWTH_PERIOD = 500;
 
-    private int divisionCooldown;
+    private int growthPeriod;
 
     private final Colony colony;
 
     public Colonist(Cell cell, Colony colony) {
         super(cell);
-        this.divisionCooldown = randomDivisionCooldown();
+        this.growthPeriod = randomGrowthPeriod();
         this.colony = colony;
     }
 
     public void update() {
-        if (divisionCooldown > 0) {
-            divisionCooldown--;
-        }
-
         List<Cell> attachments = cell.getAttachments();
         attachments.clear();
 
@@ -46,8 +42,13 @@ public class Colonist extends Individual {
         } else {
             cell.stop();
 
-            if (canDivide()) {
-                divide();
+            if (canGrow()) {
+                if (growthPeriod > 0) {
+                    growthPeriod--;
+                } else {
+                    divide();
+                    growthPeriod = randomGrowthPeriod();
+                }
             }
         }
 
@@ -82,23 +83,18 @@ public class Colonist extends Individual {
                         energy
                 )
         );
-
-        divisionCooldown = randomDivisionCooldown();
     }
 
-    private boolean canDivide() {
+    private boolean canGrow() {
         int attachments = cell.getAttachments().size();
-
-        return divisionCooldown == 0
-                && cell.energy().stored() > DIVISION_MINIMUM
-                && 0 < attachments && attachments < 6;
+        return cell.energy().stored() > DIVISION_MINIMUM && 0 < attachments && attachments < 6;
     }
 
     private boolean displaced() {
         return cell.getAttachments().size() < 2 || dist(cell.getPosition(), colony.center) > colony.radius();
     }
 
-    private static int randomDivisionCooldown() {
-        return MIN_DIVISION_COOLDOWN + (int) (Math.random() * (MAX_DIVISION_COOLDOWN - MIN_DIVISION_COOLDOWN));
+    private static int randomGrowthPeriod() {
+        return MIN_GROWTH_PERIOD + (int) (Math.random() * (MAX_GROWTH_PERIOD - MIN_GROWTH_PERIOD));
     }
 }
