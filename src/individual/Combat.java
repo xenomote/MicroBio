@@ -32,6 +32,8 @@ public class Combat extends Individual {
     }
 
     // TODO: 29/12/2020 prevent repeated adding of attacker for instant damage
+    // TODO: 14/01/2021 store target variable to prevent target thrashing
+    // TODO: 14/01/2021 attack any target in range if not targeting
     public void update() {
         if (attackCooldown > 0) {
             attackCooldown--;

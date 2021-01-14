@@ -17,6 +17,10 @@ public class Colonist extends Individual {
     public static final int MAX_GROWTH_PERIOD = 1000;
     public static final int MIN_GROWTH_PERIOD = 500;
 
+    // TODO: 14/01/2021 ensure growth progress is not lost when colony is relocated
+    // TODO: 14/01/2021 visualise growth as cell size
+    // TODO: 14/01/2021 decrease cell speed relative to growth
+    // TODO: 14/01/2021 refactor growth into a Resource attribute
     private int growthPeriod;
 
     private final Colony colony;

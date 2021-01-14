@@ -17,8 +17,9 @@ import static game.Colours.*;
 public class PlayerCommander extends Commander {
     private final Mouse mouse;
     private final Keyboard keyboard;
-    private final List<Cell> selection;
 
+    // TODO: 14/01/2021 refactor selection box into separate class
+    private final List<Cell> selection;
     private final PVector a;
     private final PVector b;
 
@@ -52,11 +53,8 @@ public class PlayerCommander extends Commander {
             selection.addAll(cellMap().get(min, max));
             selection.retainAll(cells());
         } else if (keyboard.key(' ').held() == 1) {
-            if (selection.isEmpty()) {
-                selection.addAll(cells());
-            } else {
-                selection.clear();
-            }
+            selection.clear();
+            selection.addAll(cells());
         }
 
         selection.removeIf(Cell::dead);

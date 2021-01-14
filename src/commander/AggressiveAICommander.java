@@ -19,6 +19,9 @@ public class AggressiveAICommander extends Commander {
         this.aggression = aggression;
     }
 
+    // TODO: 14/01/2021 reinforce squadrons that succeed
+    // TODO: 14/01/2021 fix repeated squadron placement bug
+    // TODO: 14/01/2021 reduce aggression, increase colony production
     @Override
     public void update() {
         super.update();

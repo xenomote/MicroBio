@@ -35,6 +35,7 @@ public class CameraControls extends Controller {
         this.D = List.of(keyboard.key('d'), keyboard.code(RIGHT));
     }
 
+    // TODO: 14/01/2021 smooth out zoom scrolling, possibly use time delta
     @Override
     public void update() {
         float zoom = camera.getZoom();

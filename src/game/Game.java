@@ -318,6 +318,8 @@ public class Game extends PApplet {
             pop();
         }
 
+
+        // TODO: 14/01/2021 separate player drawing from player commander
         player.drawSelection(g);
 
         pop();
