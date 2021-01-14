@@ -87,7 +87,7 @@ public class Colonist extends Individual {
 
     private boolean canGrow() {
         int attachments = cell.getAttachments().size();
-        return cell.energy().stored() > DIVISION_MINIMUM && 0 < attachments && attachments < 6;
+        return cell.energy().stored() > DIVISION_MINIMUM && 0 < attachments && attachments < 4;
     }
 
     private boolean displaced() {

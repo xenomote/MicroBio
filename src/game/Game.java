@@ -266,6 +266,10 @@ public class Game extends PApplet {
 
             commander.getSpawned().clear();
         }
+
+        if (player.inactive() && commanders.size() == 1) {
+            commanders.clear();
+        }
     }
 
     private int randomColor() {
