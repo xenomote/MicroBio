@@ -12,6 +12,8 @@ import java.util.List;
 
 import static game.Colours.*;
 
+// TODO: 14/01/2021 add multiple resource types which effect stats
+// TODO: 14/01/2021 randomly spawn resource producing mutants
 public class Cell implements Spatial {
     public static final float NUCLEUS_RADIUS = 10;
     public static final float MEMBRANE_RADIUS = 25;

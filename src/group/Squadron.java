@@ -34,6 +34,7 @@ public class Squadron extends Group {
         return new Combat(cell, this);
     }
 
+    // TODO: 16/01/2021 choose new rally point in single step instead of sampling
     public void update() {
         super.update();
 

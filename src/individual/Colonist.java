@@ -31,6 +31,7 @@ public class Colonist extends Individual {
         this.colony = colony;
     }
 
+    // TODO: 16/01/2021 move towards source if losing energy
     public void update() {
         List<Cell> attachments = cell.getAttachments();
         attachments.clear();

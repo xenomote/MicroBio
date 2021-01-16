@@ -23,16 +23,18 @@ public class Combat extends Individual {
     private int attackCooldown;
     private boolean recharging;
 
+    private Cell target;
+
     private final Squadron squadron;
 
     public Combat(Cell cell, Squadron squadron) {
         super(cell);
         this.squadron = squadron;
         this.recharging = false;
+        this.target = null;
     }
 
     // TODO: 29/12/2020 prevent repeated adding of attacker for instant damage
-    // TODO: 14/01/2021 store target variable to prevent target thrashing
     // TODO: 14/01/2021 attack any target in range if not targeting
     public void update() {
         if (attackCooldown > 0) {
@@ -61,44 +63,44 @@ public class Combat extends Individual {
             }
 
             recharging = !cell.energy().full();
-        } else if (!inRallyRange(cell)) {
-            cell.seek(squadron.rally);
+        } else if (dist(cell.getPosition(), squadron.rally) > squadron.radius() * 2) {
+            findTarget();
         } else {
-            Optional<Cell> target = closestTarget();
-
-            if (target.isPresent()) {
-                Cell victim = target.get();
-                cell.seek(victim.getPosition());
-                if (inAttackRange(victim) && canAttack()) {
-                    attack(victim);
+            if (target != null) {
+                if (target.health().empty() || target.energy().empty()) {
+                    findTarget();
+                } else {
+                    if (inAttackRange(target) && canAttack()) {
+                        attack(target);
+                    }
+                    cell.seek(target.getPosition());
                 }
             } else {
-                cell.stop();
+                findTarget();
             }
         }
     }
 
-    private Optional<Cell> closestTarget() {
-        List<Cell> cells = squadron.getCommander().cellMap().get(cell.getPosition(), DETECTION_RANGE);
+    private void findTarget() {
+        target = closestTarget();
 
-        Optional<Cell> closest = Optional.empty();
-        float min_dist = Float.POSITIVE_INFINITY;
+        if (!inRallyRange(cell)) {
+            cell.seek(squadron.rally);
+        } else {
+            cell.stop();
+        }
+    }
 
-        for (Cell target : cells) {
-            if (target.getCommander() == cell.getCommander()) {
-                continue;
-            }
+    private Cell closestTarget() {
+        Cell closest = null;
+        float min_dist = DETECTION_RANGE;
 
-            if (!inRallyRange(target)) {
-                continue;
-            }
-
+        for (Cell target : squadron.getTargets()) {
             float dist = dist(cell.getPosition(), target.getPosition());
             if (dist < min_dist) {
-                closest = Optional.of(target);
+                closest = target;
                 min_dist = dist;
             }
-
         }
 
         return closest;
