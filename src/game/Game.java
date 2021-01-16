@@ -303,7 +303,13 @@ public class Game extends PApplet {
         player.highlightSelection(g);
 
         cells.forEach(cell -> cell.draw(g));
-        attacks.forEach(attack -> attack.draw(g));
+        for (Cell cell : cells) {
+            cell.getAttacks().removeIf(attack -> {
+                attack.update();
+                attack.draw(g);
+                return attack.finished();
+            });
+        }
 
         if (ui.energy()) {
             drawEnergyLevels();

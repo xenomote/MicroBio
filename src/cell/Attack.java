@@ -6,8 +6,8 @@ import processing.core.PVector;
 import static game.Colours.*;
 
 public class Attack {
-    public static final int ATTACK_DURATION = 10;
-    public static final float ATTACK_RADIUS = 10;
+    public static final int ATTACK_DURATION = 7;
+    public static final float ATTACK_RADIUS = 30;
 
     private final PVector position;
     private int lifespan;
@@ -19,6 +19,10 @@ public class Attack {
 
     public void update() {
         lifespan--;
+    }
+
+    public boolean finished() {
+        return lifespan <= 0;
     }
 
     public void draw(PGraphics g) {

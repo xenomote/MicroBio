@@ -51,6 +51,8 @@ public class Cell implements Spatial {
     private final List<Cell> attachments;
     private final List<Cell> collisions;
 
+    private final List<Attack> attacks;
+
     private Group group;
 
     public Cell(Commander commander, Group group, PVector position) {
@@ -80,6 +82,8 @@ public class Cell implements Spatial {
 
         this.health = new Resource(MAX_HEALTH, MAX_HEALTH);
         this.energy = new Resource(energy, MAX_ENERGY);
+
+        this.attacks = new ArrayList<>();
     }
 
     public boolean dead() {
@@ -168,6 +172,10 @@ public class Cell implements Spatial {
 
     public List<Cell> getAttachments() {
         return attachments;
+    }
+
+    public List<Attack> getAttacks() {
+        return attacks;
     }
 
     public void draw(PGraphics g) {

@@ -125,8 +125,7 @@ public class Combat extends Individual {
 
         PVector position = PVector.add(target.getPosition(), cell.getPosition()).div(2);
 
-        // TODO: 25/07/2020 collect attacks to global list
-        new Attack(position);
+        cell.getAttacks().add(new Attack(position));
     }
 
     private boolean canAttack() {
