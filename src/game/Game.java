@@ -200,7 +200,7 @@ public class Game extends PApplet {
         background(DARK_GREY);
         drawCameraView();
 
-        player.drawMouse(g);
+        mouse.draw(g);
 
         if (ui.information()) {
             printStatistics();
@@ -324,9 +324,7 @@ public class Game extends PApplet {
             pop();
         }
 
-
-        // TODO: 14/01/2021 separate player drawing from player commander
-        player.drawSelection(g);
+        player.getBox().draw(g);
 
         pop();
     }

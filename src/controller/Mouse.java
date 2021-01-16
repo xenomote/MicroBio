@@ -1,8 +1,10 @@
 package controller;
 
+import processing.core.PGraphics;
 import processing.core.PVector;
 import processing.event.MouseEvent;
 
+import static game.Colours.WHITE;
 import static processing.core.PConstants.*;
 
 public class Mouse {
@@ -96,5 +98,12 @@ public class Mouse {
 
     public PVector coordinates() {
         return coordinates;
+    }
+
+    public void draw(PGraphics g) {
+        g.noFill();
+        g.stroke(WHITE);
+        g.strokeWeight(2);
+        g.square(position.x, position.y, 10);
     }
 }

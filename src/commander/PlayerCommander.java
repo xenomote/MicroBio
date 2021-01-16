@@ -11,7 +11,6 @@ import space.Space;
 import java.util.ArrayList;
 import java.util.List;
 
-import static game.Game.*;
 import static game.Colours.*;
 
 public class PlayerCommander extends Commander {
@@ -20,8 +19,7 @@ public class PlayerCommander extends Commander {
 
     // TODO: 14/01/2021 refactor selection box into separate class
     private final List<Cell> selection;
-    private final PVector a;
-    private final PVector b;
+    private final Selection box;
 
     public PlayerCommander(Space<Cell> cell_map, Space<EnergySource> source_map, int colour, Mouse mouse, Keyboard keyboard) {
         super(cell_map, source_map, colour);
@@ -29,38 +27,23 @@ public class PlayerCommander extends Commander {
         this.mouse = mouse;
         this.keyboard = keyboard;
         this.selection = new ArrayList<>();
-
-        this.a = new PVector();
-        this.b = new PVector();
+        this.box = new Selection(mouse, cell_map, selection);
     }
 
     public void update() {
         super.update();
+        box.update();
 
-        if (mouse.left().pressed()) {
-            if (mouse.left().held() == 0) {
-                a.set(mouse.coordinates());
-            }
-
-            b.set(mouse.coordinates());
-        }
-
-        if (mouse.left().released()) {
-            PVector min = new PVector(min(a.x, b.x), min(a.y, b.y));
-            PVector max = new PVector(max(a.x, b.x), max(a.y, b.y));
-
-            selection.clear();
-            selection.addAll(cellMap().get(min, max));
-            selection.retainAll(cells());
-        } else if (keyboard.key(' ').held() == 1) {
+        if (keyboard.key(' ').held() == 1) {
             selection.clear();
             selection.addAll(cells());
         }
 
-        selection.removeIf(Cell::dead);
-
         // TODO: 29/12/2020 move existing group if it is it is selected
         if (!selection.isEmpty()) {
+            selection.retainAll(cells());
+            selection.removeIf(Cell::dead);
+
             if (keyboard.key('c').pressed()) {
                 place_colony(selection, mouse.coordinates());
             } else if (keyboard.key('x').pressed()) {
@@ -69,31 +52,13 @@ public class PlayerCommander extends Commander {
         }
     }
 
-    public void drawMouse(PGraphics g) {
-        PVector position = mouse.position();
-
-        g.noFill();
-        g.stroke(WHITE);
-        g.strokeWeight(2);
-        g.square(position.x, position.y, 10);
-    }
-
-    public void drawSelection(PGraphics g) {
-        if (mouse.left().pressed()) {
-            PVector x = new PVector(min(a.x, b.x), min(a.y, b.y));
-            PVector y = new PVector(max(a.x, b.x), max(a.y, b.y));
-
-            g.push();
-            g.rectMode(CORNERS);
-            g.fill(WHITE, 256/2f);
-            g.rect(x.x, x.y, y.x, y.y);
-            g.pop();
-        }
-    }
-
     public void highlightSelection(PGraphics g) {
         for (Cell cell : selection) {
             cell.highlight(g);
         }
+    }
+
+    public Selection getBox() {
+        return box;
     }
 }
