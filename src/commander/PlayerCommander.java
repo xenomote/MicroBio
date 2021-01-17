@@ -5,13 +5,10 @@ import controller.Keyboard;
 import controller.Mouse;
 import game.EnergySource;
 import processing.core.PGraphics;
-import processing.core.PVector;
 import space.Space;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static game.Colours.*;
 
 public class PlayerCommander extends Commander {
     private final Mouse mouse;
@@ -19,7 +16,8 @@ public class PlayerCommander extends Commander {
 
     // TODO: 14/01/2021 refactor selection box into separate class
     private final List<Cell> selection;
-    private final Selection box;
+    private final SelectionBox box;
+    private final SelectionDrag drag;
 
     public PlayerCommander(Space<Cell> cell_map, Space<EnergySource> source_map, int colour, Mouse mouse, Keyboard keyboard) {
         super(cell_map, source_map, colour);
@@ -27,12 +25,14 @@ public class PlayerCommander extends Commander {
         this.mouse = mouse;
         this.keyboard = keyboard;
         this.selection = new ArrayList<>();
-        this.box = new Selection(mouse, cell_map, selection);
+
+        this.box = new SelectionBox(mouse, cell_map, selection);
+        this.drag = new SelectionDrag(mouse, cell_map, selection);
     }
 
     public void update() {
         super.update();
-        box.update();
+        drag.update();
 
         if (keyboard.key(' ').held() == 1) {
             selection.clear();
@@ -58,7 +58,11 @@ public class PlayerCommander extends Commander {
         }
     }
 
-    public Selection getBox() {
+    public SelectionBox getBox() {
         return box;
+    }
+
+    public SelectionDrag getDrag() {
+        return drag;
     }
 }

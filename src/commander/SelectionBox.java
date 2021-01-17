@@ -13,15 +13,14 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static processing.core.PConstants.CORNERS;
 
-public class Selection {
+public class SelectionBox {
     private final Mouse mouse;
-    private final List<Cell> selection;
-
     private final PVector a;
     private final PVector b;
     private final Space<Cell> cell_map;
+    private final List<Cell> selection;
 
-    public Selection(Mouse mouse, Space<Cell> cell_map, List<Cell> selection) {
+    public SelectionBox(Mouse mouse, Space<Cell> cell_map, List<Cell> selection) {
         this.a = new PVector();
         this.b = new PVector();
 

@@ -324,7 +324,7 @@ public class Game extends PApplet {
             pop();
         }
 
-        player.getBox().draw(g);
+        player.getDrag().draw(g);
 
         pop();
     }
