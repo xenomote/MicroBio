@@ -51,10 +51,10 @@ public class Counter {
     @Override
     public String toString() {
         return "{" +
-                "current=" + current +
-                ", total=" + total +
-                ", max=" + max +
-                ", min=" + min +
+                "current=" + getCurrent() +
+                ", total=" + getTotal() +
+                ", max=" + getMax() +
+                ", min=" + getMin() +
                 '}';
     }
 }

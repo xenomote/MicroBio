@@ -43,7 +43,6 @@ public class Game extends PApplet {
     private PlayerCommander player;
     private List<Commander> commanders;
 
-    private List<Attack> attacks;
     private List<PointMass> physics;
     private List<Movement> movement;
     private List<Area<Cell>> areas;
@@ -52,7 +51,6 @@ public class Game extends PApplet {
     private List<EnergySource> sources;
 
     private Space<Cell> cell_map;
-    private Space<EnergySource> source_map;
 
     public static void main(String[] args) {
         new Game().runSketch();
@@ -99,7 +97,6 @@ public class Game extends PApplet {
         //music = new SoundFile(this, "leaving-home-by-kevin-macleod.wav");
         //music.loop();
 
-        attacks = new ArrayList<>();
         commanders = new ArrayList<>();
         sources = new ArrayList<>();
         cells = new ArrayList<>();
@@ -127,7 +124,6 @@ public class Game extends PApplet {
     void reset() {
         ended = false;
 
-        attacks = new ArrayList<>();
         cells = new ArrayList<>();
         commanders = new ArrayList<>();
         sources = new ArrayList<>();
@@ -136,7 +132,7 @@ public class Game extends PApplet {
         sourceQuadCount = new Counter(4);
 
         cell_map = new QuadSpaceGroup<>(new PVector(0, 0), MAP_RADIUS, cellQuadCount);
-        source_map = new QuadSpaceGroup<>(new PVector(0, 0), MAP_RADIUS, sourceQuadCount);
+        Space<EnergySource> source_map = new QuadSpaceGroup<>(new PVector(0, 0), MAP_RADIUS, sourceQuadCount);
 
         for (int i = 0; i < ENERGY_SOURCES; i++) {
             float radius = random(MEMBRANE_RADIUS, MAP_RADIUS/10);
@@ -239,8 +235,6 @@ public class Game extends PApplet {
         });
 
         areas.forEach(Area::update);
-
-        attacks.forEach(Attack::update);
 
         cells.forEach(cell -> {
             cell_map.remove(cell);

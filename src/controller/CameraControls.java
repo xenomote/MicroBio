@@ -8,11 +8,13 @@ import java.util.List;
 import static processing.core.PApplet.constrain;
 import static processing.core.PConstants.*;
 
-public class CameraControls extends Controller {
+public class CameraControls {
     public static final float ZOOM_STEP = 0.1f;
     public static final float MIN_ZOOM = 0.1f;
     public static final float MAX_ZOOM = 0.9f;
-
+    
+    private final Mouse mouse;
+    private final Keyboard keyboard;
     private final Camera camera;
     private final PointMass pointMass;
     private final float speed;
@@ -24,7 +26,9 @@ public class CameraControls extends Controller {
     private final List<Button> D;
 
     public CameraControls(Mouse mouse, Keyboard keyboard, Camera camera, PointMass pointMass, float speed) {
-        super(mouse, keyboard);
+        this.mouse = mouse;
+        this.keyboard = keyboard;
+
         this.camera = camera;
         this.pointMass = pointMass;
         this.speed = speed;
@@ -36,7 +40,6 @@ public class CameraControls extends Controller {
     }
 
     // TODO: 14/01/2021 smooth out zoom scrolling, possibly use time delta
-    @Override
     public void update() {
         float zoom = camera.getZoom();
         int step = -mouse.scroll();

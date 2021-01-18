@@ -14,7 +14,6 @@ public class PlayerCommander extends Commander {
     private final Mouse mouse;
     private final Keyboard keyboard;
 
-    // TODO: 14/01/2021 refactor selection box into separate class
     private final List<Cell> selection;
     private final SelectionBox box;
     private final SelectionDrag drag;
@@ -39,7 +38,6 @@ public class PlayerCommander extends Commander {
             selection.addAll(cells());
         }
 
-        // TODO: 29/12/2020 move existing group if it is it is selected
         if (!selection.isEmpty()) {
             selection.retainAll(cells());
             selection.removeIf(Cell::dead);
