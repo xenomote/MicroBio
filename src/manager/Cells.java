@@ -12,8 +12,12 @@ public class Cells {
     private static final float NUCLEUS_MASS = 5;
     private static final float MAX_HEALTH = 100;
 
+    private static final float CELL_SPRING = 0.5f;
+
     private final PhysicsStore membranes;
     private final PhysicsStore nuclei;
+
+    private final Springs springs;
 
     private final DrawMembranes drawMembranes;
     private final DrawNuclei drawNuclei;
@@ -26,6 +30,8 @@ public class Cells {
     public Cells(int n, ArrayList<Integer> deletions) {
         membranes = new PhysicsStore(n, deletions);
         nuclei = new PhysicsStore(n, deletions);
+
+        springs = new Springs(membranes, nuclei, CELL_SPRING);
 
         ArrayList<Float> energies = new ArrayList<>(n);
         ArrayList<Integer> colours = new ArrayList<>(n);
@@ -55,6 +61,8 @@ public class Cells {
     public void update(float time) {
         membranes.getPipeline().update(time);
         nuclei.getPipeline().update(time);
+
+        springs.update();
 
         membranes.getRegistry().update();
         nuclei.getRegistry().update();
