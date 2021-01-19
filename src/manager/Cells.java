@@ -1,18 +1,19 @@
 package manager;
 
 import processing.core.PGraphics;
+import processing.core.PVector;
 
 import java.util.ArrayList;
 
 
 public class Cells {
-    private static final float MEMBRANE_MASS = 10;
+    private static final float MEMBRANE_MASS = 50f;
     private static final float MEMBRANE_RADIUS = 5;
 
-    private static final float NUCLEUS_MASS = 5;
+    private static final float NUCLEUS_MASS = 50f;
     private static final float MAX_HEALTH = 100;
 
-    private static final float CELL_SPRING = 0.5f;
+    private static final float CELL_SPRING = 0.1f;
 
     private final PhysicsStore membranes;
     private final PhysicsStore nuclei;
@@ -59,6 +60,10 @@ public class Cells {
     }
 
     public void update(float time) {
+        for (PVector force : nuclei.getForces()) {
+            force.set(PVector.random2D().mult(0.1f));
+        }
+
         membranes.getPipeline().update(time);
         nuclei.getPipeline().update(time);
 

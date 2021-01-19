@@ -27,8 +27,8 @@ public class Springs {
         for (int i = 0; i < ap.size(); i++) {
             PVector delta = PVector.sub(ap.get(i), bp.get(i));
 
-            af.get(i).add(PVector.mult(delta, k));
-            bf.get(i).add(PVector.mult(delta, -k));
+            af.get(i).add(PVector.mult(delta, -k));
+            bf.get(i).add(PVector.mult(delta, k));
         }
     }
 }

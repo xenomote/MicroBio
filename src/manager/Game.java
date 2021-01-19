@@ -18,7 +18,7 @@ public class Game extends PApplet {
 
     @Override
     public void setup() {
-        int n = 100;
+        int n = 1000;
 
         ArrayList<Integer> deletions = new ArrayList<>();
 
@@ -32,7 +32,14 @@ public class Game extends PApplet {
 
     @Override
     public void draw() {
-        cells.update(frameRateLastNanos / 1000.0f);
+        background(1);
+
+        cells.update(frameRateLastNanos / 1_000_000_000_000f);
         cells.draw(this.g);
+
+        fill(0xFFFFFFFF);
+        rect(0, 0, 50, 20);
+        fill(0);
+        text(frameRate, 0, 10);
     }
 }
