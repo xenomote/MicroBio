@@ -5,11 +5,11 @@ import processing.core.PVector;
 import java.util.ArrayList;
 
 public class Scale {
-    private final ArrayList<PVector> as;
-    private final ArrayList<Float> ns;
-    private final ArrayList<PVector> bs;
+    private final ReadList<PVector> as;
+    private final ReadList<Float> ns;
+    private final ReadList<PVector> bs;
 
-    Scale(ArrayList<PVector> as, ArrayList<Float> ns, ArrayList<PVector> bs) {
+    Scale(ReadList<PVector> as, ReadList<Float> ns, ReadList<PVector> bs) {
         this.as = as;
         this.ns = ns;
         this.bs = bs;

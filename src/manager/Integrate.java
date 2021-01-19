@@ -5,10 +5,10 @@ import processing.core.PVector;
 import java.util.ArrayList;
 
 public class Integrate {
-    private final ArrayList<PVector> as;
-    private final ArrayList<PVector> bs;
+    private final ReadList<PVector> as;
+    private final ReadList<PVector> bs;
 
-    public Integrate(ArrayList<PVector> as, ArrayList<PVector> bs) {
+    public Integrate(ReadList<PVector> as, ReadList<PVector> bs) {
         this.as = as;
         this.bs = bs;
     }
