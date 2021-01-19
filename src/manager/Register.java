@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public class Register<T> {
     private final ArrayList<T> items;
     private final ArrayDeque<T> additions;
-    private final ArrayDeque<Integer> deletions;
+    private final ArrayList<Integer> deletions;
 
-    Register(ArrayList<T> items, ArrayDeque<Integer> deletions) {
+    Register(ArrayList<T> items, ArrayList<Integer> deletions) {
         this.items = items;
         this.additions = new ArrayDeque<>();
         this.deletions = deletions;
@@ -17,12 +17,12 @@ public class Register<T> {
     void update() {
         assert(deletions.size() < items.size());
 
-        while(!deletions.isEmpty()) {
-            int i = deletions.poll();
-            assert(i < items.size());
+        for (int i = deletions.size() - 1; i >= 0; i--) {
+            int index = deletions.get(i);
+            assert (index < items.size());
 
             T last = items.remove(items.size() - 1);
-            items.set(i, last);
+            items.set(index, last);
         }
 
         while(!additions.isEmpty()) {

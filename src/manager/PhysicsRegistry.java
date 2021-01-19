@@ -6,7 +6,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class PhysicsRegistry {
-    private final ArrayDeque<Integer> deletions;
+    private final ArrayList<Integer> deletions;
 
     private final Register<Float> massRegister;
     private final Register<PVector> forceRegister;
@@ -21,7 +21,7 @@ public class PhysicsRegistry {
             ArrayList<PVector> velocities,
             ArrayList<PVector> positions
     ) {
-        deletions = new ArrayDeque<>();
+        deletions = new ArrayList<>();
 
         massRegister = new Register<>(masses, deletions);
         forceRegister = new Register<>(forces, deletions);
@@ -31,7 +31,9 @@ public class PhysicsRegistry {
     }
 
     public void delete(int i) {
-        deletions.push(i);
+        assert(i > deletions.get(deletions.size() - 1));
+
+        deletions.add(i);
     }
 
     public void create(float mass, float x, float y) {
@@ -48,5 +50,7 @@ public class PhysicsRegistry {
         accelerationRegister.update();
         velocityRegister.update();
         positionRegister.update();
+
+        deletions.clear();
     }
 }
