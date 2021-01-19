@@ -43,6 +43,7 @@ public class Game extends PApplet {
     private PlayerCommander player;
     private List<Commander> commanders;
 
+    // TODO: 18/01/2021 refactor data model with managers and components 
     private List<PointMass> physics;
     private List<Movement> movement;
     private List<Area<Cell>> areas;
