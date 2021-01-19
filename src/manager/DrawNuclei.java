@@ -3,8 +3,6 @@ package manager;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
-import java.util.ArrayList;
-
 import static processing.core.PConstants.RADIUS;
 
 public class DrawNuclei {
@@ -13,12 +11,15 @@ public class DrawNuclei {
     private final ReadList<PVector> positions;
     private final ReadList<Float> energies;
 
-    public DrawNuclei(ReadList<PVector> positions, ReadList<Float> energies) {
+    public DrawNuclei(
+            ReadList<PVector> positions,
+            ReadList<Float> energies
+    ) {
         this.positions = positions;
         this.energies = energies;
     }
 
-    private void draw(PGraphics g) {
+    public void draw(PGraphics g) {
         assert(positions.size() == energies.size());
 
         g.push();

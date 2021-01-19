@@ -3,8 +3,6 @@ package manager;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
-import java.util.ArrayList;
-
 import static processing.core.PConstants.RADIUS;
 
 public class DrawMembranes {
@@ -13,7 +11,12 @@ public class DrawMembranes {
     private final ReadList<Float> radii;
     private final ReadList<Float> healths;
 
-    public DrawMembranes(ReadList<PVector> positions, ReadList<Integer> colours, ReadList<Float> radii, ReadList<Float> healths) {
+    public DrawMembranes(
+            ReadList<PVector> positions,
+            ReadList<Integer> colours,
+            ReadList<Float> radii,
+            ReadList<Float> healths
+    ) {
         this.positions = positions;
         this.colours = colours;
         this.radii = radii;

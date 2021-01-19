@@ -2,8 +2,6 @@ package manager;
 
 import processing.core.PVector;
 
-import java.util.ArrayList;
-
 public class Integrate {
     private final ReadList<PVector> as;
     private final ReadList<PVector> bs;
