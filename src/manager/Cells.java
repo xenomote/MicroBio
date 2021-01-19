@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Cells {
     private static final float MEMBRANE_MASS = 10;
-    private static final float MEMBRANE_RADIUS = 50;
+    private static final float MEMBRANE_RADIUS = 5;
 
     private static final float NUCLEUS_MASS = 5;
     private static final float MAX_HEALTH = 100;
@@ -47,6 +47,7 @@ public class Cells {
 
         energies.add(energy);
         colours.add(colour);
+
         radii.add(MEMBRANE_RADIUS);
         healths.add(MAX_HEALTH);
     }

@@ -28,6 +28,7 @@ public class DrawMembranes {
 
         g.push();
         g.rectMode(RADIUS);
+        g.noStroke();
 
         for (int i = 0; i < positions.size(); i++) {
             // TODO: 19/01/2021 scale health to max health to tint cell
