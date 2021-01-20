@@ -3,11 +3,11 @@ package manager;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
+import static manager.Cells.MAX_ENERGY;
+import static manager.Cells.NUCLEUS_RADIUS;
 import static processing.core.PConstants.RADIUS;
 
 public class DrawNuclei {
-    public static final float NUCLEUS_RADIUS = 1;
-
     private final ReadList<PVector> positions;
     private final ReadList<Float> energies;
 
@@ -27,8 +27,7 @@ public class DrawNuclei {
         g.noStroke();
 
         for (int i = 0; i < positions.size(); i++) {
-            // TODO: 19/01/2021 scale shade to maximum energy
-            g.fill(energies.get(i));
+            g.fill(255 * (energies.get(i) / MAX_ENERGY));
 
             PVector position = positions.get(i);
             g.square(position.x, position.y, NUCLEUS_RADIUS);

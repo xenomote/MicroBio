@@ -7,13 +7,16 @@ import java.util.ArrayList;
 
 
 public class Cells {
-    private static final float MEMBRANE_MASS = 50f;
-    private static final float MEMBRANE_RADIUS = 5;
+    public static final float MEMBRANE_MASS = 10;
+    public static final float MEMBRANE_RADIUS = 5;
 
-    private static final float NUCLEUS_MASS = 50f;
-    private static final float MAX_HEALTH = 100;
+    public static final float NUCLEUS_MASS = 10;
+    public static final float NUCLEUS_RADIUS = 2;
 
-    private static final float CELL_SPRING = 0.1f;
+    public static final float MAX_HEALTH = 100;
+    public static final float MAX_ENERGY = 100;
+
+    public static final float CELL_SPRING = 100;
 
     private final PhysicsStore membranes;
     private final PhysicsStore nuclei;
@@ -61,7 +64,7 @@ public class Cells {
 
     public void update(float time) {
         for (PVector force : nuclei.getForces()) {
-            force.set(PVector.random2D().mult(0.1f));
+            force.set(PVector.random2D().mult(100));
         }
 
         membranes.getPipeline().update(time);

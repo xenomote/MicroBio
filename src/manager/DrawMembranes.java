@@ -3,6 +3,7 @@ package manager;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
+import static manager.Cells.MAX_HEALTH;
 import static processing.core.PConstants.RADIUS;
 
 public class DrawMembranes {
@@ -31,16 +32,10 @@ public class DrawMembranes {
         g.noStroke();
 
         for (int i = 0; i < positions.size(); i++) {
-            // TODO: 19/01/2021 scale health to max health to tint cell
-            float health = healths.get(i);
+            float health = healths.get(i) / MAX_HEALTH;
             int colour = colours.get(i);
 
-            // TODO: 19/01/2021 darken colour without separating components, HSB?
-            g.fill(
-                    g.red(colour) * health,
-                    g.green(colour) * health,
-                    g.blue(colour) * health
-            );
+            g.fill(g.hue(colour), g.saturation(colour), g.brightness(colour) * health);
 
             PVector position = positions.get(i);
             g.square(position.x, position.y, radii.get(i));

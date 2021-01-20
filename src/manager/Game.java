@@ -4,6 +4,8 @@ import processing.core.PApplet;
 
 import java.util.ArrayList;
 
+import static manager.Cells.MAX_ENERGY;
+
 public class Game extends PApplet {
     public static void main(String[] args) {
         new Game().runSketch();
@@ -18,6 +20,8 @@ public class Game extends PApplet {
 
     @Override
     public void setup() {
+        colorMode(HSB);
+
         int n = 1000;
 
         ArrayList<Integer> deletions = new ArrayList<>();
@@ -25,8 +29,8 @@ public class Game extends PApplet {
         cells = new Cells(n, deletions);
 
         for (int i = 0; i < n; i++) {
-            int colour = color(random(255), random(255), random(255));
-            cells.create(random(width), random(height), 100, colour);
+            int colour = color(random(255), random(200, 255), 255);
+            cells.create(random(width), random(height), MAX_ENERGY, colour);
         }
     }
 
@@ -34,7 +38,7 @@ public class Game extends PApplet {
     public void draw() {
         background(1);
 
-        cells.update(frameRateLastNanos / 1_000_000_000_000f);
+        cells.update(frameRateLastNanos / 1_000_000_000_000_000f);
         cells.draw(this.g);
 
         fill(0xFFFFFFFF);
