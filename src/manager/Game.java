@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import static manager.Cells.MAX_ENERGY;
 
 public class Game extends PApplet {
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 500;
+
     public static void main(String[] args) {
         new Game().runSketch();
     }
@@ -15,7 +18,7 @@ public class Game extends PApplet {
 
     @Override
     public void settings() {
-        size(1000, 500);
+        size(WIDTH, HEIGHT);
     }
 
     @Override
@@ -38,7 +41,7 @@ public class Game extends PApplet {
     public void draw() {
         background(1);
 
-        cells.update(frameRateLastNanos / 1_000_000_000_000_000f);
+        cells.update(frameRateLastNanos / 5_000_000_000_000_000f);
         cells.draw(this.g);
 
         fill(0xFFFFFFFF);

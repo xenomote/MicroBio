@@ -8,10 +8,13 @@ public class Register<T> {
     private final ArrayDeque<T> additions;
     private final ArrayList<Integer> deletions;
 
+    private final ReadList<T> read;
+
     Register(ArrayList<T> items, ArrayList<Integer> deletions) {
         this.items = items;
         this.additions = new ArrayDeque<>();
         this.deletions = deletions;
+        this.read = new ReadList<>(items);
     }
 
     void update() {
@@ -32,5 +35,9 @@ public class Register<T> {
 
     void add(T item) {
         additions.push(item);
+    }
+
+    public ReadList<T> read() {
+        return read;
     }
 }

@@ -5,21 +5,27 @@ import processing.core.PVector;
 
 import java.util.ArrayList;
 
+import static manager.Game.*;
+
 
 public class Cells {
-    public static final float MEMBRANE_MASS = 10;
+    public static final float MEMBRANE_MASS = 2;
     public static final float MEMBRANE_RADIUS = 5;
 
-    public static final float NUCLEUS_MASS = 10;
+    public static final float NUCLEUS_MASS = 1;
     public static final float NUCLEUS_RADIUS = 2;
 
     public static final float MAX_HEALTH = 100;
     public static final float MAX_ENERGY = 100;
 
     public static final float CELL_SPRING = 100;
+    private static final float CONTACT_SPRING = 1;
 
     private final PhysicsStore membranes;
     private final PhysicsStore nuclei;
+
+    private final PositionGrid positionGrid;
+    private final Contacts contacts;
 
     private final Springs springs;
 
@@ -37,18 +43,16 @@ public class Cells {
 
         springs = new Springs(membranes, nuclei, CELL_SPRING);
 
-        ArrayList<Float> energies = new ArrayList<>(n);
-        ArrayList<Integer> colours = new ArrayList<>(n);
-        ArrayList<Float> radii = new ArrayList<>(n);
-        ArrayList<Float> healths = new ArrayList<>(n);
+        energies = new Register<>(new ArrayList<>(n), deletions);
+        colours = new Register<>(new ArrayList<>(n), deletions);
+        radii = new Register<>(new ArrayList<>(n), deletions);
+        healths = new Register<>(new ArrayList<>(n), deletions);
 
-        drawMembranes = new DrawMembranes(membranes.getPositions(), new ReadList<>(colours), new ReadList<>(radii), new ReadList<>(healths));
-        drawNuclei = new DrawNuclei(nuclei.getPositions(), new ReadList<>(energies));
+        drawMembranes = new DrawMembranes(membranes.getPositions(), colours.read(), radii.read(), healths.read());
+        drawNuclei = new DrawNuclei(nuclei.getPositions(), energies.read());
 
-        this.energies = new Register<>(energies, deletions);
-        this.colours = new Register<>(colours, deletions);
-        this.radii = new Register<>(radii, deletions);
-        this.healths = new Register<>(healths, deletions);
+        positionGrid = new PositionGrid(WIDTH, HEIGHT, 100, membranes.getPositions(), radii.read());
+        contacts = new Contacts(positionGrid, membranes.getPositions(), radii.read(), membranes.getForces(), CONTACT_SPRING);
     }
 
     public void create(float x, float y, float energy, int colour) {
@@ -64,11 +68,14 @@ public class Cells {
 
     public void update(float time) {
         for (PVector force : nuclei.getForces()) {
-            force.set(PVector.random2D().mult(100));
+            force.add(PVector.random2D().mult(10f));
         }
 
         membranes.getPipeline().update(time);
         nuclei.getPipeline().update(time);
+
+        positionGrid.update();
+        contacts.update();
 
         springs.update();
 
