@@ -2,8 +2,6 @@ package manager;
 
 import processing.core.PApplet;
 
-import java.util.ArrayList;
-
 import static manager.Cells.MAX_ENERGY;
 
 public class Game extends PApplet {
@@ -55,7 +53,6 @@ public class Game extends PApplet {
                 cells.clone(i);
             }
         }
-
 
         fill(0xFFFFFFFF);
         rect(0, 0, 45, 25);

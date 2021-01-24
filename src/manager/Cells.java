@@ -19,13 +19,16 @@ public class Cells {
     public static final float MAX_ENERGY = 100;
 
     public static final float CELL_SPRING = 100;
-    private static final float CONTACT_SPRING = 10;
+    public static final float CONTACT_SPRING = 10;
+
+    public static final float ATTACHMENT_RADIUS = 3;
 
     private final PhysicsStore membranes;
     private final PhysicsStore nuclei;
 
     private final PositionGrid positionGrid;
     private final Contacts contacts;
+    private final Attachments attachments;
 
     private final Springs springs;
 
@@ -57,6 +60,7 @@ public class Cells {
 
         positionGrid = new PositionGrid(WIDTH, HEIGHT, MEMBRANE_RADIUS * 8, membranes.getPositions(), radii.read());
         contacts = new Contacts(positionGrid, membranes.getPositions(), radii.read(), membranes.getForces(), CONTACT_SPRING);
+        attachments = new Attachments(positionGrid, membranes.getPositions(), nuclei.getPositions(), radii.read(), colours.read());
     }
 
     public void create(float x, float y, float energy, int colour) {
@@ -96,6 +100,7 @@ public class Cells {
 
         positionGrid.update();
         contacts.update();
+        attachments.update();
 
         springs.update();
 
