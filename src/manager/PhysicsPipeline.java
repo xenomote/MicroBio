@@ -2,6 +2,10 @@ package manager;
 
 import processing.core.PVector;
 
+import static java.lang.Math.*;
+import static manager.Game.HEIGHT;
+import static manager.Game.WIDTH;
+
 public class PhysicsPipeline {
     private static final float DRAG = 0.99f;
 
@@ -11,6 +15,7 @@ public class PhysicsPipeline {
 
     private final ReadList<PVector> forces;
     private final ReadList<PVector> velocities;
+    private final ReadList<PVector> positions;
 
     PhysicsPipeline(
             ReadList<Float> masses,
@@ -25,6 +30,7 @@ public class PhysicsPipeline {
 
         this.forces = forces;
         this.velocities = velocities;
+        this.positions = positions;
     }
 
     public void update(float time) {
@@ -38,6 +44,13 @@ public class PhysicsPipeline {
 
         for (PVector velocity : velocities) {
             velocity.mult(DRAG);
+        }
+
+        for (PVector position : positions) {
+            position.set(
+                    min(max(position.x, 0), WIDTH),
+                    min(max(position.y, 0), HEIGHT)
+            );
         }
     }
 }

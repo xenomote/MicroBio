@@ -27,9 +27,7 @@ public class Game extends PApplet {
 
         int n = 1000;
 
-        ArrayList<Integer> deletions = new ArrayList<>();
-
-        cells = new Cells(n, deletions);
+        cells = new Cells(n);
 
         for (int i = 0; i < n; i++) {
             int colour = color(random(255), random(200, 255), 255);
@@ -44,9 +42,26 @@ public class Game extends PApplet {
         cells.update(frameRateLastNanos / 5_000_000_000_000_000f);
         cells.draw(this.g);
 
+        int n = cells.getEnergies().read().size() - 1;
+
+        for (int i = 0; i < n; i++) {
+            if (random(1) < 0.001) {
+                cells.delete(i);
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (random(1) < 0.001) {
+                cells.clone(i);
+            }
+        }
+
+
         fill(0xFFFFFFFF);
-        rect(0, 0, 50, 20);
+        rect(0, 0, 45, 25);
         fill(0);
-        text(frameRate, 0, 10);
+        double scale = Math.pow(10, 3);
+        double frames = Math.round(frameRate * scale) /scale;
+        text(cells.getEnergies().read().size() + "\n" + frames, 5, 10);
     }
 }

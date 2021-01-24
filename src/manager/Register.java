@@ -18,14 +18,17 @@ public class Register<T> {
     }
 
     void update() {
-        assert(deletions.size() < items.size());
+        assert(deletions.size() <= items.size());
 
         for (int i = deletions.size() - 1; i >= 0; i--) {
             int index = deletions.get(i);
             assert (index < items.size());
 
             T last = items.remove(items.size() - 1);
-            items.set(index, last);
+
+            if (index < items.size()) {
+                items.set(index, last);
+            }
         }
 
         while(!additions.isEmpty()) {

@@ -19,7 +19,7 @@ public class Cells {
     public static final float MAX_ENERGY = 100;
 
     public static final float CELL_SPRING = 100;
-    private static final float CONTACT_SPRING = 1;
+    private static final float CONTACT_SPRING = 10;
 
     private final PhysicsStore membranes;
     private final PhysicsStore nuclei;
@@ -37,7 +37,11 @@ public class Cells {
     private final Register<Float> radii;
     private final Register<Float> healths;
 
-    public Cells(int n, ArrayList<Integer> deletions) {
+    private final ArrayList<Integer> deletions;
+
+    public Cells(int n) {
+        deletions = new ArrayList<>();
+
         membranes = new PhysicsStore(n, deletions);
         nuclei = new PhysicsStore(n, deletions);
 
@@ -51,7 +55,7 @@ public class Cells {
         drawMembranes = new DrawMembranes(membranes.getPositions(), colours.read(), radii.read(), healths.read());
         drawNuclei = new DrawNuclei(nuclei.getPositions(), energies.read());
 
-        positionGrid = new PositionGrid(WIDTH, HEIGHT, 100, membranes.getPositions(), radii.read());
+        positionGrid = new PositionGrid(WIDTH, HEIGHT, MEMBRANE_RADIUS * 8, membranes.getPositions(), radii.read());
         contacts = new Contacts(positionGrid, membranes.getPositions(), radii.read(), membranes.getForces(), CONTACT_SPRING);
     }
 
@@ -64,6 +68,22 @@ public class Cells {
 
         radii.add(MEMBRANE_RADIUS);
         healths.add(MAX_HEALTH);
+    }
+
+    public void delete(int n) {
+        assert (deletions.isEmpty() || n > deletions.get(deletions.size() - 1));
+        assert (deletions.size() < energies.read().size());
+        assert (n < energies.read().size());
+
+        deletions.add(n);
+    }
+
+    public void clone(int n) {
+        PVector position = membranes.getPositions().get(n);
+        float energy = energies.read().get(n);
+        int colour = colours.read().get(n);
+
+        create(position.x, position.y, energy, colour);
     }
 
     public void update(float time) {
@@ -86,10 +106,16 @@ public class Cells {
         colours.update();
         radii.update();
         healths.update();
+
+        deletions.clear();
     }
 
     public void draw(PGraphics g) {
         drawMembranes.draw(g);
         drawNuclei.draw(g);
+    }
+
+    public Register<Float> getEnergies() {
+        return energies;
     }
 }
