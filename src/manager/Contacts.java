@@ -34,8 +34,11 @@ public class Contacts {
 
                         PVector delta = PVector.sub(positions.get(a), positions.get(b));
                         float dist = radii.get(a) + radii.get(b);
+                        float diff = delta.mag();
 
-                        if (delta.mag() < dist) {
+                        if (diff < dist) {
+                            delta.setMag(dist - diff);
+
                             forces.get(a).add(PVector.mult(delta, k));
                             forces.get(b).add(PVector.mult(delta, -k));
                         }
