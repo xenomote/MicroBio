@@ -23,14 +23,14 @@ public class DrawNuclei {
         assert(positions.size() == energies.size());
 
         g.push();
-        g.rectMode(RADIUS);
+        g.ellipseMode(RADIUS);
         g.noStroke();
 
         for (int i = 0; i < positions.size(); i++) {
             g.fill(255 * (energies.get(i) / MAX_ENERGY));
 
             PVector position = positions.get(i);
-            g.square(position.x, position.y, NUCLEUS_RADIUS);
+            g.circle(position.x, position.y, NUCLEUS_RADIUS);
         }
 
         g.pop();

@@ -28,7 +28,7 @@ public class DrawMembranes {
         assert(positions.size() == radii.size() && radii.size() == colours.size());
 
         g.push();
-        g.rectMode(RADIUS);
+        g.ellipseMode(RADIUS);
         g.noStroke();
 
         for (int i = 0; i < positions.size(); i++) {
@@ -38,7 +38,7 @@ public class DrawMembranes {
             g.fill(g.hue(colour), g.saturation(colour), g.brightness(colour) * health);
 
             PVector position = positions.get(i);
-            g.square(position.x, position.y, radii.get(i));
+            g.circle(position.x, position.y, radii.get(i));
         }
 
         g.pop();
