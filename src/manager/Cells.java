@@ -70,7 +70,7 @@ public class Cells {
         energies.add(energy);
         colours.add(colour);
 
-        radii.add(MEMBRANE_RADIUS);
+        radii.add(((float) Math.random() * (MEMBRANE_RADIUS / 2)) + MEMBRANE_RADIUS/2);
         healths.add(MAX_HEALTH);
     }
 
@@ -120,7 +120,7 @@ public class Cells {
         drawNuclei.draw(g);
     }
 
-    public Register<Float> getEnergies() {
-        return energies;
+    public ReadList<PVector> getPositions() {
+        return membranes.getPositions();
     }
 }
