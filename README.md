@@ -1,5 +1,6 @@
 # MicroBio
-A cellular strategy game written in Processing
+
+A microbiology themed realtime strategy game written in Processing 
 
 ## About
 
@@ -18,7 +19,7 @@ Build the project
 make
 ```
 
-Then run the project
+Launch the game
 ```bash
 make run
 ```
