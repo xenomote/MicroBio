@@ -23,8 +23,8 @@ public class Game extends PApplet {
     public static final int OPPOSITION_AIS = 30;
     public static final int ENERGY_SOURCES = 20;
 
-    private SoundFile[] splat;
-    private SoundFile music;
+    // private SoundFile[] splat;
+    // private SoundFile music;
 
     private Mouse mouse;
     private Keyboard keyboard;
